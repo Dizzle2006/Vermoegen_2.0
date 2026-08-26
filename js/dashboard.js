@@ -386,22 +386,30 @@ const donutLabelsPlugin = {
     const tot = data.reduce((a,b)=>a+(Number(b)||0),0);
     if (tot <= 0) return;
     ctx.save();
+    ctx.font = "600 12.5px 'JetBrains Mono', ui-monospace, monospace";
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
     for (let i = 0; i < meta.data.length; i++){
       const arc = meta.data[i];
       const val = Number(data[i])||0;
       const pct = (val/tot)*100;
-      if (pct < 4) continue;
+      if (pct < 3) continue;
       const {x,y,startAngle,endAngle,outerRadius,innerRadius} = arc.getProps(['x','y','startAngle','endAngle','outerRadius','innerRadius'], true);
       const mid = (startAngle + endAngle) / 2;
       const r = (outerRadius + innerRadius) / 2;
+      const label = Math.round(pct) + '\u00a0%';
+      // Segment zu schmal f\u00fcr das Label? Dann lieber weglassen als quetschen \u2014
+      // die Legende darunter zeigt den exakten Wert ohnehin.
+      const arcLen = (endAngle - startAngle) * r;
+      if (ctx.measureText(label).width > arcLen * 0.80) continue;
       const lx = x + Math.cos(mid) * r;
       const ly = y + Math.sin(mid) * r;
-      const label = pct >= 10 ? Math.round(pct) + '\u00a0%' : pct.toFixed(1).replace('.',',') + '\u00a0%';
-      ctx.font = '600 13px "DM Mono", ui-monospace, monospace';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+      ctx.shadowColor = 'rgba(4,16,28,.6)';
+      ctx.shadowBlur = 5;
+      ctx.shadowOffsetY = 1;
       ctx.fillStyle = '#ffffff';
       ctx.fillText(label, lx, ly);
+      ctx.shadowColor = 'transparent';
     }
     ctx.restore();
   }
@@ -420,9 +428,9 @@ const donutCenterPlugin = {
     const cy = (chartArea.top + chartArea.bottom) / 2;
     ctx.save();
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#7c8aa5'; ctx.font = '500 9.5px "Syne", system-ui, sans-serif';
+    ctx.fillStyle = '#7c8aa5'; ctx.font = "500 9.5px 'Inter', system-ui, sans-serif";
     ctx.fillText('GESAMT', cx, cy - 14);
-    ctx.fillStyle = '#f4f7fb'; ctx.font = '400 16px "DM Mono", ui-monospace, monospace';
+    ctx.fillStyle = '#f4f7fb'; ctx.font = "600 16px 'JetBrains Mono', ui-monospace, monospace";
     const lbl = tot >= 1_000_000 ? (tot/1_000_000).toFixed(2).replace('.',',') + '\u00a0Mio\u00a0€'
               : tot >= 100_000 ? Math.round(tot/1000) + '.000\u00a0€'
               : fmtEUR0.format(tot);
