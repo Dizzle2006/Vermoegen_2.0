@@ -164,7 +164,7 @@ Allgemeine Konventionen:
 | Tooltip-Hintergrund | `#16253c` (= `--bg-2`) |
 | Tooltip-Border | `#34496a` (= `--line-2`) |
 | Tooltip-Body | Inter 11–12 px |
-| Linien-Stroke | 2 px (Hauptserie), 1.5 px (Benchmark, gestrichelt) |
+| Linien-Stroke | 2.5 px, runde Kappen/Verbindungen |
 | Punkt-Radius | 3 px normal, 4 px aktueller Punkt |
 
 Chart.js kann CSS Custom Properties nicht direkt lesen — die Werte oben sind als
@@ -173,7 +173,7 @@ Hex/rgba-Literale in `js/dashboard.js` dupliziert. Bei einer Token-Änderung in
 werden.
 
 Spezifische Charts:
-- **Verlauf**: Liniefarbe `--acid` (`#3ea6ff`), Flächengradient `rgba(62,166,255,.22) → 0`. Benchmark gestrichelt in Gold (`#f2b544`). Punkte außer dem aktuellsten sind „hohl" (Fill = `--bg-1`), damit sie sich gegen das dunkle Panel absetzen.
+- **Verlauf**: Liniefarbe `--acid` (`#3ea6ff`), Flächengradient `rgba(62,166,255,.30) → 0`, `cubicInterpolationMode:'monotone'` (verhindert optisches Über-/Unterschwingen zwischen Punkten). Zeitbereiche: 3M / 6M / 1J / 3J / 5J / Alle. Punkte außer dem aktuellsten sind „hohl" (Fill = `--bg-1`) und kleiner (2.5px), damit sich der aktuelle Punkt (5px, voll gefüllt) als Fokuspunkt absetzt — zusätzlich mit weichem Leuchtkreis (`lineGlowPlugin`) hinterlegt. Keine vertikalen Gridlines, Legende ausgeblendet (nur eine Serie).
 - **Donut**: 3 Kategoriefarben, Border 2 px in `--bg-1` (statt Weiß) — Segmente wirken gegen das dunkle Panel „ausgeschnitten". Plugin zeichnet %-Label in jedes Segment ≥ 4 % in Weiß, Gesamtsumme in der Mitte in `--ink`.
 - **Szenario**: 3 Linien — Pessimistisch (`--red`), Realistisch (`--acid`), Optimistisch (`--positive`), keine Fläche.
 - **Radar**: Sechseck-Gitter, `--acid` Fläche bei `rgba(62,166,255,.20)`, 0–100 Skala.

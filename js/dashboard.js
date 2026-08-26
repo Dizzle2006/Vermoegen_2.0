@@ -505,18 +505,31 @@ let currentRange = 'ALL';
 function rangeStart(range){
   if (range === 'ALL') return 0;
   const now = Date.now();
-  const map = { '1M':30, '3M':90, '6M':180, '1Y':365 };
+  const map = { '3M':90, '6M':180, '1Y':365, '3Y':365*3, '5Y':365*5 };
   return now - (map[range]||0) * 86400000;
 }
-function buildBenchmarkSeries(snaps, rate){
-  if (!snaps.length) return [];
-  const first = snaps[0];
-  const r = rate/100;
-  return snaps.map(s => {
-    const yrs = (new Date(s.t) - new Date(first.t)) / (365.25*86400000);
-    return first.value * Math.pow(1+r, yrs);
-  });
-}
+/* Weicher Leuchtpunkt am aktuellen Wert — nur für den Verlaufschart */
+const lineGlowPlugin = {
+  id: 'lineGlow',
+  afterDatasetsDraw(chart){
+    if (chart.canvas.id !== 'line-chart') return;
+    const meta = chart.getDatasetMeta(0);
+    const point = meta && meta.data[meta.data.length - 1];
+    if (!point) return;
+    const {ctx} = chart;
+    ctx.save();
+    const r = 16;
+    const g = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, r);
+    g.addColorStop(0, 'rgba(62,166,255,.45)');
+    g.addColorStop(1, 'rgba(62,166,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+};
+Chart.register(lineGlowPlugin);
 function renderLineChart(){
   const ctx = document.getElementById('line-chart');
   const snaps = [...state.snapshots].sort((a,b)=>new Date(a.t)-new Date(b.t));
@@ -530,31 +543,19 @@ function renderLineChart(){
     labels.push('jetzt');
     values.push(total());
   }
-  const bench = state.settings.benchmarkOn ? buildBenchmarkSeries(filtered, state.settings.benchmarkRate) : null;
-  if (bench && filtered.length){
-    const lastT = new Date(filtered[filtered.length-1].t).getTime();
-    const yrs = (Date.now() - lastT)/(365.25*86400000);
-    bench.push((bench[bench.length-1]||0) * Math.pow(1 + state.settings.benchmarkRate/100, yrs));
-  }
   const datasets = [{
     label:'Vermögen', data: values, borderColor:'#3ea6ff',
     backgroundColor:(c)=>{ const {chart}=c;const {ctx,chartArea}=chart;
       if (!chartArea) return 'rgba(62,166,255,.05)';
       const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-      g.addColorStop(0,'rgba(62,166,255,.22)'); g.addColorStop(1,'rgba(62,166,255,0)'); return g; },
-    fill:true, tension:.28, borderWidth:2,
-    pointRadius:(c)=> c.dataIndex === values.length-1 ? 4 : 3,
-    pointHoverRadius:5,
+      g.addColorStop(0,'rgba(62,166,255,.30)'); g.addColorStop(1,'rgba(62,166,255,0)'); return g; },
+    fill:true, cubicInterpolationMode:'monotone', borderWidth:2.5,
+    borderCapStyle:'round', borderJoinStyle:'round',
+    pointRadius:(c)=> c.dataIndex === values.length-1 ? 5 : 2.5,
+    pointHoverRadius:6, pointHitRadius:10,
     pointBackgroundColor:(c)=> c.dataIndex === values.length-1 ? '#3ea6ff' : '#101d30',
     pointBorderColor:'#3ea6ff', pointBorderWidth:1.5,
   }];
-  if (bench){
-    datasets.push({
-      label:`Benchmark ${fmtPct.format(state.settings.benchmarkRate)} % p.a.`,
-      data: bench, borderColor:'#f2b544', borderDash:[4,4],
-      borderWidth:1.5, pointRadius:0, pointHoverRadius:3, tension:.2, fill:false,
-    });
-  }
   if (lineChart){
     lineChart.data.labels = labels;
     lineChart.data.datasets = datasets;
@@ -568,14 +569,13 @@ function renderLineChart(){
       responsive:true, maintainAspectRatio:false,
       interaction:{ mode:'index', intersect:false },
       plugins:{
-        legend:{ display:true, position:'bottom', align:'start',
-          labels:{ color:'#7c8aa5', font:{family:'Inter',size:11,weight:'500'}, boxWidth:10, boxHeight:10, padding:14, usePointStyle:false } },
+        legend:{ display:false },
         tooltip:{
           backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1,
           titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12},
-          padding:10, displayColors:true, boxWidth:8, boxHeight:8,
+          padding:10, displayColors:false,
           callbacks:{
-            label:(c)=> `  ${c.dataset.label}:  ${fmtEUR.format(c.parsed.y)}`,
+            label:(c)=> `  ${fmtEUR.format(c.parsed.y)}`,
             afterBody:(items) => {
               const i = items[0].dataIndex;
               const snap = filtered[i];
@@ -586,8 +586,8 @@ function renderLineChart(){
         }
       },
       scales:{
-        x:{ grid:{ color:'rgba(255,255,255,.06)', drawTicks:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, maxRotation:0, autoSkipPadding:18 } },
-        y:{ grid:{ color:'rgba(255,255,255,.06)', drawTicks:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, padding:8, callback:(v)=> fmtEUR0.format(v) } }
+        x:{ grid:{ display:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, maxRotation:0, autoSkipPadding:18, maxTicksLimit:8 } },
+        y:{ grid:{ color:'rgba(255,255,255,.06)', drawTicks:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, padding:8, maxTicksLimit:5, callback:(v)=> fmtEUR0.format(v) } }
       }
     }
   });
@@ -600,26 +600,6 @@ document.getElementById('range-seg').addEventListener('click', (ev) => {
   currentRange = b.dataset.range;
   renderLineChart();
 });
-
-/* benchmark toggle */
-const benchEl = document.getElementById('bench-toggle');
-const benchInput = document.getElementById('bench-rate');
-benchInput.value = fmtPct.format(state.settings.benchmarkRate);
-benchEl.classList.toggle('on', !!state.settings.benchmarkOn);
-benchEl.addEventListener('click', (e) => {
-  if (e.target.tagName === 'INPUT') return;
-  state.settings.benchmarkOn = !state.settings.benchmarkOn;
-  benchEl.classList.toggle('on', state.settings.benchmarkOn);
-  saveState();
-  renderLineChart();
-});
-benchInput.addEventListener('change', () => {
-  state.settings.benchmarkRate = parseNum(benchInput.value);
-  benchInput.value = fmtPct.format(state.settings.benchmarkRate);
-  saveState();
-  renderLineChart();
-});
-benchInput.addEventListener('focus', () => benchInput.select());
 
 /* snapshot save flow */
 const snapSave = document.getElementById('snap-save');

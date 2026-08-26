@@ -23,7 +23,7 @@ Ohne Internet zeigt die App eine System-Fallback-Schrift; alle Funktionen außer
 
 ### Überblick
 - **Gesamtvermögen oben rechts** mit Delta zum letzten Snapshot (absolut + %)
-- **Vermögensverlauf** als Liniendiagramm, optionaler Benchmark-Overlay (`% p.a.`)
+- **Vermögensverlauf** als Liniendiagramm mit wählbarem Zeitbereich (3M / 6M / 1J / 3J / 5J / Alle)
 - **Allokations-Donut** mit Prozent-Labels in den Segmenten und Gesamtsumme in der Mitte
 - **3-Szenario-Projektion** über frei wählbaren Zeitraum: pessimistisch (3 %) / realistisch (6 %) / optimistisch (10 %), nominal oder real
 - **Portfolio-Radar** mit sechs berechneten Kennzahlen

@@ -17,12 +17,6 @@ function bootstrapInputs(){
   if (typeof targetInput !== 'undefined' && targetInput) {
     targetInput.value = state.settings.target ? fmtNum2.format(state.settings.target) : '';
   }
-  if (typeof benchInput !== 'undefined' && benchInput) {
-    benchInput.value = fmtPct.format(state.settings.benchmarkRate);
-  }
-  if (typeof benchEl !== 'undefined' && benchEl) {
-    benchEl.classList.toggle('on', !!state.settings.benchmarkOn);
-  }
   if (typeof scenRealToggle !== 'undefined' && scenRealToggle) {
     scenRealToggle.classList.toggle('on', !!state.settings.scenarioReal);
   }

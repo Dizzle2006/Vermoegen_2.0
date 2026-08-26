@@ -73,8 +73,6 @@ Alle Daten liegen in einem JSON-Objekt im `localStorage` unter dem Key **`vermoe
 
 ```ts
 {
-  benchmarkRate: number,        // % p.a., Default 7.0
-  benchmarkOn: boolean,         // Overlay an/aus
   inflationRate: number,        // % p.a., Default 2.5
   target: number,               // Zielvermögen in €
   openCats: {                   // welche Kategorien sind aufgeklappt

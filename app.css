@@ -93,15 +93,6 @@
   .btn.danger:hover{border-color:var(--red);color:var(--red)}
   .btn.tiny{padding:4px 8px;font-size:10px}
 
-  /* benchmark input */
-  .bench{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid var(--line);background:var(--bg-2);font-size:12px;color:var(--ink-2);letter-spacing:0;text-transform:none;flex-shrink:0;white-space:nowrap;border-radius:6px}
-  .bench input{width:42px;background:transparent;border:0;font-family:'Inter';font-size:12px;color:var(--ink);text-align:right;padding:0}
-  .bench input:focus{box-shadow:none}
-  .bench label{cursor:pointer;user-select:none}
-  .bench .dot{width:8px;height:8px;background:var(--ink-3);border:1px solid var(--line-2)}
-  .bench.on .dot{background:var(--blue);border-color:var(--blue)}
-  .bench.on{color:var(--ink-2)}
-
   /* ---------- Allocation ---------- */
   .donut-wrap{position:relative;height:220px}
   .legend{margin-top:10px;display:flex;flex-direction:column;gap:1px;border-top:1px solid var(--line)}
@@ -318,8 +309,6 @@
     .chart-controls{flex-wrap:wrap;gap:8px;width:100%}
     .seg{flex:1;display:flex;justify-content:space-between}
     .seg button{flex:1;padding:6px 0;font-size:11px}
-    .bench{flex:1 1 auto;font-size:11px}
-    .bench input{width:50px}
     .btn.primary{flex:1 1 100%}
 
     /* Allokation Legend kompakter */

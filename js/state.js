@@ -30,7 +30,6 @@ function defaultState(){
     entries,
     snapshots: [],
     settings: {
-      benchmarkRate: 7.0, benchmarkOn: false,
       inflationRate: 2.5,
       target: 0,
       openCats: {LIQUIDE:true,KAPITALMARKT:true,SACHWERTE:true},
@@ -100,7 +99,6 @@ function loadState(){
     }
     s.snapshots = (s.snapshots||[]).map(sn => Object.assign({ note:'', entries:{}, breakdown:{} }, sn));
     s.settings = Object.assign({
-      benchmarkRate:7, benchmarkOn:false,
       inflationRate:2.5,
       target:0,
       openCats:{LIQUIDE:true,KAPITALMARKT:true,SACHWERTE:true},
