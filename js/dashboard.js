@@ -420,9 +420,9 @@ const donutCenterPlugin = {
     const cy = (chartArea.top + chartArea.bottom) / 2;
     ctx.save();
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#71717a'; ctx.font = '500 9.5px "Syne", system-ui, sans-serif';
+    ctx.fillStyle = '#7c8aa5'; ctx.font = '500 9.5px "Syne", system-ui, sans-serif';
     ctx.fillText('GESAMT', cx, cy - 14);
-    ctx.fillStyle = '#09090b'; ctx.font = '400 16px "DM Mono", ui-monospace, monospace';
+    ctx.fillStyle = '#f4f7fb'; ctx.font = '400 16px "DM Mono", ui-monospace, monospace';
     const lbl = tot >= 1_000_000 ? (tot/1_000_000).toFixed(2).replace('.',',') + '\u00a0Mio\u00a0€'
               : tot >= 100_000 ? Math.round(tot/1000) + '.000\u00a0€'
               : fmtEUR0.format(tot);
@@ -459,7 +459,7 @@ function renderAllocation(){
   const finalData = allZero ? [1,1,1] : data;
   if (donutChart){
     donutChart.data.datasets[0].data = finalData;
-    donutChart.data.datasets[0].backgroundColor = allZero ? ['#e4e4e7','#e4e4e7','#e4e4e7'] : colors;
+    donutChart.data.datasets[0].backgroundColor = allZero ? ['#34496a','#34496a','#34496a'] : colors;
     donutChart.options.plugins.donutLabels = { disabled: allZero };
     donutChart.options.plugins.donutCenter = { disabled: allZero };
     donutChart.update('none');
@@ -471,8 +471,8 @@ function renderAllocation(){
       labels: sums.map(s => s.label),
       datasets: [{
         data: finalData,
-        backgroundColor: allZero ? ['#e4e4e7','#e4e4e7','#e4e4e7'] : colors,
-        borderColor: '#ffffff', borderWidth: 2, hoverOffset: 6,
+        backgroundColor: allZero ? ['#34496a','#34496a','#34496a'] : colors,
+        borderColor: '#101d30', borderWidth: 2, hoverOffset: 6,
       }]
     },
     options: {
@@ -482,7 +482,7 @@ function renderAllocation(){
         donutLabels:{ disabled: allZero },
         donutCenter:{ disabled: allZero },
         tooltip:{
-          backgroundColor:'#09090b', borderColor:'#3f3f46', borderWidth:1,
+          backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1,
           titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12},
           padding:10, displayColors:false,
           callbacks:{ label:(c) => {
@@ -537,21 +537,21 @@ function renderLineChart(){
     bench.push((bench[bench.length-1]||0) * Math.pow(1 + state.settings.benchmarkRate/100, yrs));
   }
   const datasets = [{
-    label:'Vermögen', data: values, borderColor:'#1e40af',
+    label:'Vermögen', data: values, borderColor:'#3ea6ff',
     backgroundColor:(c)=>{ const {chart}=c;const {ctx,chartArea}=chart;
-      if (!chartArea) return 'rgba(200,241,53,.05)';
+      if (!chartArea) return 'rgba(62,166,255,.05)';
       const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-      g.addColorStop(0,'rgba(30,64,175,.20)'); g.addColorStop(1,'rgba(30,64,175,0)'); return g; },
+      g.addColorStop(0,'rgba(62,166,255,.22)'); g.addColorStop(1,'rgba(62,166,255,0)'); return g; },
     fill:true, tension:.28, borderWidth:2,
     pointRadius:(c)=> c.dataIndex === values.length-1 ? 4 : 3,
     pointHoverRadius:5,
-    pointBackgroundColor:(c)=> c.dataIndex === values.length-1 ? '#1e40af' : '#ffffff',
-    pointBorderColor:'#1e40af', pointBorderWidth:1.5,
+    pointBackgroundColor:(c)=> c.dataIndex === values.length-1 ? '#3ea6ff' : '#101d30',
+    pointBorderColor:'#3ea6ff', pointBorderWidth:1.5,
   }];
   if (bench){
     datasets.push({
       label:`Benchmark ${fmtPct.format(state.settings.benchmarkRate)} % p.a.`,
-      data: bench, borderColor:'#ca8a04', borderDash:[4,4],
+      data: bench, borderColor:'#f2b544', borderDash:[4,4],
       borderWidth:1.5, pointRadius:0, pointHoverRadius:3, tension:.2, fill:false,
     });
   }
@@ -569,9 +569,9 @@ function renderLineChart(){
       interaction:{ mode:'index', intersect:false },
       plugins:{
         legend:{ display:true, position:'bottom', align:'start',
-          labels:{ color:'#71717a', font:{family:'Inter',size:11,weight:'500'}, boxWidth:10, boxHeight:10, padding:14, usePointStyle:false } },
+          labels:{ color:'#7c8aa5', font:{family:'Inter',size:11,weight:'500'}, boxWidth:10, boxHeight:10, padding:14, usePointStyle:false } },
         tooltip:{
-          backgroundColor:'#09090b', borderColor:'#3f3f46', borderWidth:1,
+          backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1,
           titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12},
           padding:10, displayColors:true, boxWidth:8, boxHeight:8,
           callbacks:{
@@ -586,8 +586,8 @@ function renderLineChart(){
         }
       },
       scales:{
-        x:{ grid:{ color:'rgba(9,9,11,.05)', drawTicks:false }, border:{display:false}, ticks:{ color:'#71717a', font:{family:'Inter',size:10}, maxRotation:0, autoSkipPadding:18 } },
-        y:{ grid:{ color:'rgba(9,9,11,.05)', drawTicks:false }, border:{display:false}, ticks:{ color:'#71717a', font:{family:'Inter',size:10}, padding:8, callback:(v)=> fmtEUR0.format(v) } }
+        x:{ grid:{ color:'rgba(255,255,255,.06)', drawTicks:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, maxRotation:0, autoSkipPadding:18 } },
+        y:{ grid:{ color:'rgba(255,255,255,.06)', drawTicks:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, padding:8, callback:(v)=> fmtEUR0.format(v) } }
       }
     }
   });
@@ -712,9 +712,9 @@ function renderScenario(){
   const pess = projectFV(start, rate, years, 0.03);
 
   const datasets = [
-    { label:'Optimistisch · 10 % p.a.', data:opt,  borderColor:'#1e40af', backgroundColor:'rgba(30,64,175,.07)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
-    { label:'Realistisch · 6 % p.a.',   data:real, borderColor:'#1e40af', backgroundColor:'rgba(30,64,175,.08)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
-    { label:'Pessimistisch · 3 % p.a.', data:pess, borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,.06)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
+    { label:'Optimistisch · 10 % p.a.', data:opt,  borderColor:'#34d399', backgroundColor:'rgba(52,211,153,.08)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
+    { label:'Realistisch · 6 % p.a.',   data:real, borderColor:'#3ea6ff', backgroundColor:'rgba(62,166,255,.08)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
+    { label:'Pessimistisch · 3 % p.a.', data:pess, borderColor:'#f4685f', backgroundColor:'rgba(244,104,95,.06)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
   ];
   const ctx = document.getElementById('scen-chart');
   if (scenChart){ scenChart.data.labels = labels; scenChart.data.datasets = datasets; scenChart.update('none'); }
@@ -722,13 +722,13 @@ function renderScenario(){
     responsive:true, maintainAspectRatio:false,
     interaction:{mode:'index',intersect:false},
     plugins:{
-      legend:{ display:true, position:'bottom', align:'start', labels:{ color:'#71717a', font:{family:'Inter',size:10.5,weight:'500'}, boxWidth:10, boxHeight:10, padding:10, usePointStyle:false } },
-      tooltip:{ backgroundColor:'#09090b', borderColor:'#3f3f46', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:11}, padding:9, displayColors:true, boxWidth:8, boxHeight:8,
+      legend:{ display:true, position:'bottom', align:'start', labels:{ color:'#7c8aa5', font:{family:'Inter',size:10.5,weight:'500'}, boxWidth:10, boxHeight:10, padding:10, usePointStyle:false } },
+      tooltip:{ backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:11}, padding:9, displayColors:true, boxWidth:8, boxHeight:8,
         callbacks:{ label:(c)=> `  ${c.dataset.label}: ${fmtEUR0.format(c.parsed.y)}` } }
     },
     scales:{
-      x:{ grid:{color:'rgba(9,9,11,.05)',drawTicks:false}, border:{display:false}, ticks:{color:'#71717a',font:{family:'Inter',size:10},autoSkipPadding:18}},
-      y:{ grid:{color:'rgba(9,9,11,.05)',drawTicks:false}, border:{display:false}, ticks:{color:'#71717a',font:{family:'Inter',size:10},padding:6,callback:(v)=>fmtEUR0.format(v)}}
+      x:{ grid:{color:'rgba(255,255,255,.06)',drawTicks:false}, border:{display:false}, ticks:{color:'#7c8aa5',font:{family:'Inter',size:10},autoSkipPadding:18}},
+      y:{ grid:{color:'rgba(255,255,255,.06)',drawTicks:false}, border:{display:false}, ticks:{color:'#7c8aa5',font:{family:'Inter',size:10},padding:6,callback:(v)=>fmtEUR0.format(v)}}
     }
   }});
 
@@ -806,10 +806,10 @@ function renderRadar(){
     datasets: [{
       label:'Portfolio',
       data: values,
-      borderColor:'#1e40af',
-      backgroundColor:'rgba(200,241,53,.18)',
+      borderColor:'#3ea6ff',
+      backgroundColor:'rgba(62,166,255,.20)',
       borderWidth:2,
-      pointBackgroundColor:'#c8f135',
+      pointBackgroundColor:'#3ea6ff',
       pointRadius:3.5,
       pointHoverRadius:5,
     }]
@@ -821,15 +821,15 @@ function renderRadar(){
       responsive:true, maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        tooltip:{ backgroundColor:'#09090b', borderColor:'#3f3f46', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12}, padding:10,
+        tooltip:{ backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12}, padding:10,
           callbacks:{ label:(c)=> '  Score: ' + c.parsed.r + ' / 100' } }
       },
       scales:{
         r:{
           min:0, max:100,
-          angleLines:{ color:'rgba(9,9,11,.08)' },
-          grid:{ color:'rgba(9,9,11,.06)' },
-          pointLabels:{ color:'#3f3f46', font:{family:'Inter',size:12,weight:'500'}, padding:8 },
+          angleLines:{ color:'rgba(255,255,255,.09)' },
+          grid:{ color:'rgba(255,255,255,.07)' },
+          pointLabels:{ color:'#aebbd1', font:{family:'Inter',size:12,weight:'500'}, padding:8 },
           ticks:{ display:false, stepSize:25, backdropColor:'transparent' },
         }
       }

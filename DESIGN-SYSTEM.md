@@ -1,46 +1,55 @@
 # Design System — Vermögensaufstellung
 
-Modernes, zurückhaltendes Dashboard-Vokabular. Inspiration: Stripe / Linear / Mercury — kein Neobroker-Look, keine Verspieltheit, keine Gradients auf großen Flächen.
+Dunkles Dashboard-Vokabular. Inspiration: Deutsche Bank Mobile (dunkles Navy als
+Grundfläche, helles Blau als Akzent, weiße Primär-Buttons) — kein Neobroker-Look,
+keine Verspieltheit, keine Gradients auf großen Flächen.
 
 ---
 
 ## Farben
 
-Alle Farbtokens leben als CSS Custom Properties im `:root` von `Vermögensaufstellung.html`.
+Alle Farbtokens leben als CSS Custom Properties im `:root` von `app.css`.
 
 ### Neutrale (Hintergrund / Linien / Text)
 
 | Token | Hex | Verwendung |
 |---|---|---|
-| `--bg` | `#f5f5f7` | Seiten-Hintergrund |
-| `--bg-1` | `#ffffff` | Panel-Hintergrund |
-| `--bg-2` | `#fafafa` | Sub-Card / Help-Popover |
-| `--bg-3` | `#f1f1f4` | Hover, Pille-Hintergrund |
-| `--line` | `#e4e4e7` | Hairline-Border |
-| `--line-2` | `#d4d4d8` | Border mit etwas mehr Gewicht |
-| `--ink` | `#09090b` | Primärer Text |
-| `--ink-2` | `#3f3f46` | Sekundärer Text |
-| `--ink-3` | `#71717a` | Tertiärer Text / Labels |
-| `--ink-4` | `#a1a1aa` | Disabled / Empty States |
+| `--bg` | `#0a1420` | Seiten-Hintergrund (dunkles Navy) |
+| `--bg-1` | `#101d30` | Panel-Hintergrund |
+| `--bg-2` | `#16253c` | Sub-Card / Help-Popover / Inputs |
+| `--bg-3` | `#1c2e48` | Hover, Pille-Hintergrund |
+| `--line` | `#243854` | Hairline-Border |
+| `--line-2` | `#34496a` | Border mit etwas mehr Gewicht |
+| `--ink` | `#f4f7fb` | Primärer Text (fast Weiß) |
+| `--ink-2` | `#aebbd1` | Sekundärer Text |
+| `--ink-3` | `#7c8aa5` | Tertiärer Text / Labels |
+| `--ink-4` | `#4f5d78` | Disabled / Empty States |
 
 ### Akzentfarben
 
 | Token | Hex | Verwendung |
 |---|---|---|
-| `--acid` | `#1e40af` | Primärer Akzent: Buttons, Linienchart, Fokus-Ring |
-| `--acid-dim` | `#1e3a8a` | Primary-Button Hover |
-| `--positive` | `#16a34a` | Positive Deltas, Gewinner-Badges |
-| `--red` | `#dc2626` | Negative Deltas, Verlierer-Badges, Drawdown-Chart |
-| `--amber` | `#ca8a04` | Warn-States (mittlere Konzentration) |
-| `--gold` | `#ca8a04` | Akzent-Highlights, FIX-Badge-Frame |
+| `--acid` | `#3ea6ff` | Primärer Akzent: Linienchart, Fokus-Ring, aktive Segmented-Control |
+| `--acid-dim` | `#2b86d8` | Akzent-Hover (nicht-weiße Elemente) |
+| `--on-accent` | `#04101c` | Textfarbe auf hellen Flächen (weiße Primär-Buttons, aktiver Akzent-Chip) |
+| `--positive` | `#34d399` | Positive Deltas, Gewinner-Badges |
+| `--red` | `#f4685f` | Negative Deltas, Verlierer-Badges |
+| `--amber` | `#f2b544` | Warn-States (mittlere Konzentration) |
+| `--gold` | `#f2b544` | Akzent-Highlights, FIX-Badge-Frame |
+
+Primär-Buttons (`.btn.primary`) weichen bewusst vom `--acid`-Muster ab: **weißer
+Hintergrund, dunkler Text** (`--on-accent`) — analog zum „Next"-Button in der
+Deutsche-Bank-Mobile-App. Sekundäre Akzent-Elemente (aktiver Tab in der
+Segmented-Control, aktiver Help-Button) nutzen weiterhin `--acid`-Fläche mit
+`--on-accent`-Text.
 
 ### Kategorie-Farben
 
 | Kategorie | Hex |
 |---|---|
-| Liquide | `#0891b2` (Cyan-600) |
-| Kapitalmarkt | `#1e40af` (Indigo-700) |
-| Sachwerte | `#b45309` (Amber-700) |
+| Liquide | `#22d3ee` (Cyan) |
+| Kapitalmarkt | `#3ea6ff` (= `--acid`) |
+| Sachwerte | `#f0973d` (Orange) |
 
 ---
 
@@ -99,8 +108,8 @@ Hairline-Border `--line`, weißer Hintergrund, 10 px Radius, 1 px Soft-Shadow.
 
 | Variante | Klasse | Aussehen |
 |---|---|---|
-| Sekundär | `.btn` | Weiß, hairline border |
-| Primär | `.btn .primary` | `--acid` Hintergrund, weißer Text |
+| Sekundär | `.btn` | `--bg-2`, hairline border |
+| Primär | `.btn .primary` | Weißer Hintergrund, dunkler Text (`--on-accent`) |
 | Klein | `.btn .tiny` | Gleiches Vokabular, kleinere Padding |
 | Gefahr | `.btn .danger` | Hover wird rot |
 
@@ -149,23 +158,25 @@ Allgemeine Konventionen:
 
 | Element | Wert |
 |---|---|
-| Grid-Linien | `rgba(9,9,11,.05)` |
-| Tick-Farbe | `#71717a` |
+| Grid-Linien | `rgba(255,255,255,.06)` |
+| Tick-Farbe | `#7c8aa5` (= `--ink-3`) |
 | Tick-Font | Inter 10 px |
-| Tooltip-Hintergrund | `#09090b` |
-| Tooltip-Border | `#3f3f46` |
+| Tooltip-Hintergrund | `#16253c` (= `--bg-2`) |
+| Tooltip-Border | `#34496a` (= `--line-2`) |
 | Tooltip-Body | Inter 11–12 px |
 | Linien-Stroke | 2 px (Hauptserie), 1.5 px (Benchmark, gestrichelt) |
 | Punkt-Radius | 3 px normal, 4 px aktueller Punkt |
 
+Chart.js kann CSS Custom Properties nicht direkt lesen — die Werte oben sind als
+Hex/rgba-Literale in `js/dashboard.js` dupliziert. Bei einer Token-Änderung in
+`app.css` müssen die entsprechenden Chart-Konfigurationen manuell nachgezogen
+werden.
+
 Spezifische Charts:
-- **Verlauf**: Liniefarbe `--acid`, Flächengradient `rgba(30,64,175,.20) → 0`. Benchmark gestrichelt in Gold.
-- **Donut**: 3 Kategoriefarben, Border 2 px weiß. Plugin zeichnet %-Label in jedes Segment ≥ 4 %, Gesamtsumme in der Mitte.
-- **Szenario**: 3 Linien — Pessimistisch (rot), Realistisch (blau), Optimistisch (grün), keine Fläche.
-- **Radar**: Sechseck-Gitter, `--acid` Fläche bei `rgba(30,64,175,.18)`, 0–100 Skala.
-- **Monte Carlo Fan**: 5 gestaffelte Bänder (P10 / P25 / P50 / P75 / P90), Median in `--acid` Vollton, äußere Bänder transparent.
-- **Drawdown**: Fläche unter 0 in rot, Y-Achse capped bei 0 (zeigt nur Negative).
-- **FIRE**: einfache Liniefläche in `--acid`, fade-to-zero wenn Vermögen erschöpft.
+- **Verlauf**: Liniefarbe `--acid` (`#3ea6ff`), Flächengradient `rgba(62,166,255,.22) → 0`. Benchmark gestrichelt in Gold (`#f2b544`). Punkte außer dem aktuellsten sind „hohl" (Fill = `--bg-1`), damit sie sich gegen das dunkle Panel absetzen.
+- **Donut**: 3 Kategoriefarben, Border 2 px in `--bg-1` (statt Weiß) — Segmente wirken gegen das dunkle Panel „ausgeschnitten". Plugin zeichnet %-Label in jedes Segment ≥ 4 % in Weiß, Gesamtsumme in der Mitte in `--ink`.
+- **Szenario**: 3 Linien — Pessimistisch (`--red`), Realistisch (`--acid`), Optimistisch (`--positive`), keine Fläche.
+- **Radar**: Sechseck-Gitter, `--acid` Fläche bei `rgba(62,166,255,.20)`, 0–100 Skala.
 
 ---
 
