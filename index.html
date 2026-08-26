@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vermögensaufstellung</title>
+<meta name="description" content="Persönliche Vermögensaufstellung — alle Daten lokal im Browser.">
+<meta name="theme-color" content="#1e40af">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Vermögen">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<!-- ===== TOPBAR ===== -->
+<header class="topbar">
+  <div class="brand">
+    <div>
+      <div class="name">VERMÖGENSAUFBAU</div>
+      <div class="sub">Persönliche Vermögensaufstellung</div>
+    </div>
+    <div class="clock mono" id="clock">— · —</div>
+  </div>
+  <div class="total">
+    <span class="label">Gesamtvermögen</span>
+    <div class="value mono" id="total-value">0,00&nbsp;€</div>
+    <span class="delta flat" id="total-delta">
+      <span class="arrow">·</span>
+      <span class="abs">Noch kein Snapshot</span>
+      <span class="sep">·</span>
+      <span class="pct">—</span>
+    </span>
+  </div>
+</header>
+
+<!-- ===== ROW 1: Verlauf + Allokation ===== -->
+<div class="grid two-third">
+  <section class="panel">
+    <div class="head">
+      <div class="titlewrap">
+        <h2>Vermögensverlauf</h2>
+        <span class="sub">Jeder Punkt = ein gespeicherter Snapshot. „Jetzt" zeigt den aktuellen Stand.</span>
+      </div>
+      <div class="chart-controls">
+        <div class="seg" id="range-seg">
+          <button data-range="1M">1M</button>
+          <button data-range="3M">3M</button>
+          <button data-range="6M">6M</button>
+          <button data-range="1Y">1J</button>
+          <button data-range="ALL" class="on">ALLE</button>
+        </div>
+        <label class="bench" id="bench-toggle" title="Vergleichslinie ein-/ausblenden">
+          <span class="dot"></span>
+          <span>Benchmark</span>
+          <input type="text" id="bench-rate" value="7,0" inputmode="decimal"> <span>%&nbsp;p.a.</span>
+        </label>
+        <button class="btn primary" id="snap-btn" title="Friert den aktuellen Gesamtwert mit Zeitstempel ein">+ Snapshot speichern</button>
+      </div>
+    </div>
+    <div class="snap-save" id="snap-save">
+      <input type="text" id="snap-note-input" placeholder="Optionale Notiz zu diesem Snapshot (z. B. &quot;Festgeld ausgelaufen, umgeschichtet&quot;)" maxlength="120">
+      <button class="btn primary" id="snap-confirm">Speichern</button>
+      <button class="btn" id="snap-cancel">Abbrechen</button>
+    </div>
+    <div class="body">
+      <div class="chart-wrap">
+        <canvas id="line-chart"></canvas>
+        <div class="chart-empty" id="line-empty" style="display:none">
+          <div class="box">
+            <div class="ttl">Noch kein Verlauf</div>
+            <div class="txt">Trag in den Kategorien unten deine Werte ein und klicke dann <b>„+ Snapshot speichern"</b>, um deinen ersten Datenpunkt anzulegen.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="head">
+      <div class="titlewrap">
+        <h2>Allokation</h2>
+        <span class="sub">Aufteilung nach Anlageklasse.</span>
+      </div>
+      <span class="badge mono" id="alloc-badge">3 KLASSEN</span>
+    </div>
+    <div class="body">
+      <div class="donut-wrap">
+        <canvas id="donut-chart"></canvas>
+        <div class="chart-empty" id="donut-empty" style="display:none">
+          <div class="box">
+            <div class="ttl">Keine Werte</div>
+            <div class="txt">Trage in den Kategorien Werte ein, um die Aufteilung zu sehen.</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend" id="alloc-legend"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== ROW 2: Szenario + Radar ===== -->
+<div class="grid half" style="margin-top:16px">
+  <section class="panel">
+    <div class="head">
+      <div class="titlewrap">
+        <h2>3-Szenario-Projektion</h2>
+        <span class="sub">Wie könnte dein Vermögen wachsen — pessimistisch, realistisch, optimistisch.</span>
+      </div>
+      <button class="helpbtn" data-help="help-scen" aria-label="Erklärung anzeigen">?</button>
+    </div>
+    <div class="help-pop" id="help-scen">
+      <b>Drei Zinseszins-Pfade.</b> Aus Startkapital + monatlicher Sparrate werden drei Wachstumslinien projiziert: <b style="color:#dc2626">pessimistisch (3 %)</b>, <b style="color:#1e40af">realistisch (6 %)</b>, <b style="color:var(--acid)">optimistisch (10 %)</b>. Mit „Real" werden die Endwerte zusätzlich um Inflation bereinigt — also was die Summe in heutiger Kaufkraft wert ist.
+    </div>
+    <div class="body">
+      <div class="input-row" style="margin-bottom:10px">
+        <div class="ipair"><label>Startkapital</label><div class="ip"><input id="scen-start" type="text" inputmode="decimal" value="0"><span class="s">€</span></div></div>
+        <div class="ipair"><label>Sparrate / Monat</label><div class="ip"><input id="scen-rate" type="text" inputmode="decimal" value="0"><span class="s">€</span></div></div>
+        <div class="ipair"><label>Laufzeit</label><div class="ip"><input id="scen-years" type="text" inputmode="decimal" value="15"><span class="s">J</span></div></div>
+        <div class="ipair"><label>Inflation</label><div class="ip"><input id="scen-inf" type="text" inputmode="decimal" value="2,5"><span class="s">%</span></div></div>
+        <div class="toggle-mini" id="scen-real" title="Endwerte zusätzlich inflationsbereinigt anzeigen"><span class="dot"></span><span>Real</span></div>
+      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="scen-chart"></canvas></div>
+      <div class="scen-result" id="scen-result"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="head">
+      <div class="titlewrap">
+        <h2>Portfolio-Radar</h2>
+        <span class="sub">Sechs Kennzahlen auf einen Blick — je größer die Fläche, desto besser.</span>
+      </div>
+      <button class="helpbtn" data-help="help-radar" aria-label="Erklärung anzeigen">?</button>
+    </div>
+    <div class="help-pop" id="help-radar">
+      <b>Sechs Achsen, Score 0–100.</b>
+      <b>Diversifikation</b>: gleichmäßige Verteilung auf die drei Klassen.
+      <b>Wachstum</b>: Anteil Kapitalmarkt am Gesamtvermögen.
+      <b>Liquidität</b>: Anteil sofort verfügbarer Mittel (Liquide).
+      <b>Stabilität</b>: Anteil Sachwerte + Festgeld.
+      <b>Konzentration⁻¹</b>: niedrig = ein Asset dominiert; hoch = kein Klumpenrisiko.
+      <b>Zielerreichung</b>: aktuelles Vermögen / Zielwert.
+    </div>
+    <div class="body">
+      <div class="chart-wrap" style="height:280px;position:relative">
+        <canvas id="radar-chart"></canvas>
+        <div class="chart-empty" id="radar-empty" style="display:none">
+          <div class="box">
+            <div class="ttl">Noch keine Daten</div>
+            <div class="txt">Trage Werte in den Kategorien ein, dann erscheinen hier deine sechs Portfolio-Kennzahlen.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== KATEGORIEN ===== -->
+<div class="section-strip">
+  <h3>Kategorien</h3>
+  <span class="desc">Klick auf einen Wert zum Ändern. Notizen, Sparraten und Δ-Werte zum letzten Snapshot inklusive.</span>
+  <div class="line"></div>
+  <span class="tag mono" id="entries-count">0 Einträge</span>
+</div>
+<section class="panel">
+  <div class="accordion" id="accordion"></div>
+</section>
+
+<!-- ===== SPARRATEN ===== -->
+<div class="section-strip">
+  <h3>Wiederkehrende Einzahlungen</h3>
+  <span class="desc">Pro Asset hinterlegte monatliche Sparraten. Werden automatisch in Ziel-, Cashflow- und Monte-Carlo-Rechnungen übernommen.</span>
+  <div class="line"></div>
+</div>
+<section class="panel">
+  <div class="sparbar" id="spar-summary"></div>
+  <div class="spar-list" id="spar-list"></div>
+</section>
+
+<!-- ===== ZIELWERT ===== -->
+<div class="section-strip">
+  <h3>Zielwert</h3>
+  <span class="desc">Dein langfristiges Vermögensziel — speist Radar (Zielerreichung) und Monatsreport.</span>
+  <div class="line"></div>
+</div>
+<section class="panel">
+  <div class="body" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+    <div class="ipair">
+      <label style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)">Zielvermögen</label>
+      <div class="ip" style="display:flex;border:1px solid var(--line);background:var(--bg)"><input id="target-input" type="text" inputmode="decimal" style="border:0;padding:8px 10px;font-family:'Inter';font-size:16px;width:200px;text-align:right;background:transparent"><span style="padding:0 10px 0 0;display:grid;align-items:center;color:var(--ink-3);font-family:'Inter';font-size:13px">€</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <span style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)">Aktueller Fortschritt</span>
+      <div style="display:flex;align-items:center;gap:10px;min-width:280px">
+        <div style="flex:1;height:8px;background:var(--bg-2);border:1px solid var(--line);position:relative"><div id="target-bar" style="position:absolute;left:0;top:0;bottom:0;background:var(--acid);transition:width 200ms ease;width:0%"></div></div>
+        <span class="mono" id="target-pct" style="font-size:14px;min-width:60px;text-align:right">—</span>
+      </div>
+      <span class="mono" id="target-meta" style="font-size:11px;color:var(--ink-3)">noch nicht gesetzt</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== TOOLS NAV ===== -->
+<div class="section-strip">
+  <h3>Tools</h3>
+  <span class="desc">Neun unabhängige Finanz-Rechner. Tippe auf eine Kachel, um den Rechner zu öffnen.</span>
+  <div class="line"></div>
+  <span class="tag mono">09 MODULE</span>
+</div>
+<nav class="tools-nav" aria-label="Tools-Navigation">
+  <a class="tnav" href="tools.html#tool-cagr"><span class="tnav-k mono">A</span><span class="tnav-t">CAGR-Rechner</span><span class="tnav-d">Durchschnittliche Jahresrendite</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-inf"><span class="tnav-k mono">B</span><span class="tnav-t">Inflations-Adjuster</span><span class="tnav-d">Realer Wert in der Zukunft</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-goal"><span class="tnav-k mono">C</span><span class="tnav-t">Zielrechner</span><span class="tnav-d">Wann erreichst du dein Sparziel?</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-fire"><span class="tnav-k mono">D</span><span class="tnav-t">Entnahme (FIRE)</span><span class="tnav-d">Wie lange reicht das Vermögen?</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-mc"><span class="tnav-k mono">E</span><span class="tnav-t">Monte Carlo</span><span class="tnav-d">1.000 Pfade Marktsimulation</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-dd"><span class="tnav-k mono">F</span><span class="tnav-t">Max Drawdown</span><span class="tnav-d">Größter historischer Einbruch</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-div"><span class="tnav-k mono">G</span><span class="tnav-t">Diversifikations-Score</span><span class="tnav-d">Wie ausgewogen ist dein Portfolio?</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-cf"><span class="tnav-k mono">H</span><span class="tnav-t">Cashflow-Projektion</span><span class="tnav-d">Wachstum 1 / 3 / 5 / 10 Jahre</span><span class="tnav-arr">→</span></a>
+  <a class="tnav" href="tools.html#tool-rep"><span class="tnav-k mono">I</span><span class="tnav-t">Monats-Report</span><span class="tnav-d">Auto-Auswertung der letzten Snapshots</span><span class="tnav-arr">→</span></a>
+</nav>
+
+<!-- ===== SNAPSHOTS ===== -->
+<div class="section-strip">
+  <h3>Snapshot-Verlauf</h3>
+  <span class="desc">Alle gespeicherten Momentaufnahmen mit Notizen. Klick auf Notiz → bearbeiten. Per × einzeln entfernen.</span>
+  <div class="line"></div>
+  <span class="tag mono" id="snap-count">0 Einträge</span>
+</div>
+<section class="panel">
+  <div class="snaps" id="snap-list"></div>
+</section>
+
+<script src="js/state.js"></script>
+<script src="js/helpers.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/main-dashboard.js"></script>
+</body>
+</html>

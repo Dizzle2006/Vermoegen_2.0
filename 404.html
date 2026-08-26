@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weiterleitung … — Vermögensaufstellung</title>
+<script>
+  // GitHub Pages liefert 404.html bei jedem unbekannten Pfad aus.
+  // Wir leiten auf den Repo-Root (./) um, wo die App liegt.
+  (function () {
+    var path = window.location.pathname;
+    // Repo-Basis ermitteln: alles bis einschließlich des ersten Pfadsegments
+    // (z.B. "/vermoegen/" auf username.github.io/vermoegen/...).
+    // Auf einem User-/Org-Site (username.github.io ohne Subpath) wird "/" verwendet.
+    var host = window.location.host;
+    var isUserSite = /\.github\.io$/i.test(host) && path.split('/').filter(Boolean).length <= 1 && !/\.github\.io$/i.test(host.split('.')[0]);
+    var base;
+    if (host.endsWith('.github.io')) {
+      var parts = path.split('/').filter(Boolean);
+      // Wenn nur "username.github.io" → base = "/"
+      // Wenn "username.github.io/repo/..." → base = "/repo/"
+      base = parts.length > 0 ? '/' + parts[0] + '/' : '/';
+    } else {
+      base = '/';
+    }
+    window.location.replace(base);
+  })();
+</script>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f7;color:#09090b;display:grid;place-items:center;min-height:100vh;margin:0;padding:32px;text-align:center}
+  .card{max-width:420px;background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:32px}
+  a{color:#1e40af}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1 style="margin:0 0 8px;font-size:18px">Weiterleitung …</h1>
+    <p style="color:#71717a;font-size:14px;margin:0 0 16px">Falls nichts passiert, hier klicken:</p>
+    <p><a href="./">Zur Vermögensaufstellung</a></p>
+  </div>
+</body>
+</html>
