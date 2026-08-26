@@ -898,7 +898,6 @@ targetInput.addEventListener('change', () => {
   saveState();
   renderTarget();
   renderRadar();
-  if (typeof renderReport === 'function') renderReport();
 });
 targetInput.addEventListener('focus', () => targetInput.select());
 function renderTarget(){

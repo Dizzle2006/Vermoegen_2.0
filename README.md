@@ -37,20 +37,7 @@ Ohne Internet zeigt die App eine System-Fallback-Schrift; alle Funktionen außer
 - Δ zum letzten Snapshot pro Position, Winner/Loser-Badges
 
 ### Wiederkehrende Einzahlungen
-Übersicht aller Sparraten: monatlich, jährlich, 10 Jahre ohne Zins, 10 Jahre mit 6 % Zinseszins. Wird automatisch aus den pro-Asset-Raten zusammengerechnet und in den Tool-Inputs vorbelegt.
-
-### Tools
-Neun unabhängige Rechner — jeder hat ein **?**-Icon im Titel mit Klartext-Erklärung. Details in [`TOOLS-REFERENZ.md`](TOOLS-REFERENZ.md):
-
-1. **CAGR-Rechner** — durchschnittliche jährliche Wachstumsrate
-2. **Inflations-Adjuster** — Realwert in Zukunft
-3. **Zielrechner** — Monate bis zum Sparziel
-4. **Entnahme-Rechner (FIRE)** — wie lange reicht das Vermögen?
-5. **Monte Carlo** — 1.000 zufällige Pfade mit Volatilität
-6. **Max Drawdown** — aus deinen Snapshots berechnet
-7. **Diversifikations-Score** — 0–100 plus Klumpenrisiko-Warnungen
-8. **Cashflow-Projektion** — 1/3/5/10 Jahre Tabelle
-9. **Monats-Report** — Auto-generiert aus den letzten zwei Snapshots
+Übersicht aller Sparraten: monatlich, jährlich, 10 Jahre ohne Zins, 10 Jahre mit 6 % Zinseszins. Wird automatisch aus den pro-Asset-Raten zusammengerechnet.
 
 ### Snapshot-Verlauf
 Liste aller gespeicherten Stände mit Notiz, Wert, Δ zum vorherigen. Notizen jederzeit nachträglich editierbar.
@@ -89,7 +76,6 @@ Liste aller gespeicherten Stände mit Notiz, Wert, Δ zum vorherigen. Notizen je
 | `Vermögensaufstellung.html` | Die App (single-file, alles enthalten) |
 | `README.md` | Diese Datei |
 | `DESIGN-SYSTEM.md` | Farben, Schriften, Komponenten |
-| `TOOLS-REFERENZ.md` | Alle Tools mit Formeln und Beispielen |
 | `ARCHITEKTUR.md` | Datenmodell, State-Struktur, Migration |
 
 ---

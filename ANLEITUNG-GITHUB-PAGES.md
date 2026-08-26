@@ -14,8 +14,7 @@ app.css                 ← alle Styles
 js/state.js             ← State + localStorage
 js/helpers.js           ← Formatierung + Berechnungen
 js/dashboard.js         ← Dashboard-Rendering
-js/tools.js             ← alle Rechner-Tools
-js/main.js              ← Bootstrap & „Render all"
+js/main-dashboard.js    ← Bootstrap & „Render all"
 favicon.svg             ← App-Icon
 manifest.webmanifest    ← für „Zum Home-Bildschirm hinzufügen"
 404.html                ← fängt falsche URLs ab
@@ -30,7 +29,6 @@ manifest.webmanifest    ← für „Zum Home-Bildschirm hinzufügen"
 README.md
 ARCHITEKTUR.md
 DESIGN-SYSTEM.md
-TOOLS-REFERENZ.md
 ANLEITUNG-GITHUB-PAGES.md   ← diese Datei
 Vermögensaufstellung.html   ← leitet auf index.html weiter (Alt-Link-Schutz)
 ```
@@ -89,7 +87,7 @@ https://DEIN-USERNAME.github.io/vermoegen/
 
 ## Updates: was wenn ich die App ändere?
 
-Wenn du nur **eine** Datei änderst (z. B. ein Tool in `js/tools.js`):
+Wenn du nur **eine** Datei änderst (z. B. `js/dashboard.js`):
 
 1. Im Repo durch die Ordner zur Datei navigieren.
 2. Auf das Stift-Symbol klicken, ändern, **Commit changes**.

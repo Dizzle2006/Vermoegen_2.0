@@ -218,16 +218,6 @@
   .spar-list .cat{font-family:'Inter';font-size:11px;color:var(--ink-3);letter-spacing:0;text-transform:none}
   .spar-list .v{font-family:'Inter';font-size:12px;color:var(--ink);min-width:120px;text-align:right}
 
-  /* ---------- Tools ---------- */
-  .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  @media (max-width:1280px){.tools{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:760px){.tools{grid-template-columns:1fr}}
-  .tool{background:var(--bg-1);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;position:relative;min-width:0;box-shadow:0 1px 2px rgba(9,9,11,.03)}
-  .tool .t-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);gap:10px}
-  .tool .t-head-left{display:flex;align-items:center;gap:10px;min-width:0}
-  .tool .t-tag{font-family:'Inter';font-size:11px;color:var(--ink-3);letter-spacing:0;flex-shrink:0}
-  .tool .t-title{font-family:'Inter';font-weight:600;font-size:13.5px;letter-spacing:-.005em;text-transform:none;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
   .helpbtn{width:20px;height:20px;border-radius:50%;border:1px solid var(--line-2);background:#ffffff;color:var(--ink-3);font-family:'Inter';font-weight:500;font-size:11px;display:inline-grid;place-items:center;cursor:pointer;padding:0;flex-shrink:0;line-height:1;transition:all 150ms ease}
   .helpbtn:hover{color:var(--acid);border-color:var(--acid)}
   .helpbtn.active{background:var(--acid);color:#ffffff;border-color:var(--acid)}
@@ -236,73 +226,6 @@
   .help-pop b{color:var(--ink);font-weight:600}
   .help-pop code{font-family:'JetBrains Mono','Inter',monospace;font-style:normal;font-weight:500;font-size:12px;color:var(--acid);background:var(--bg-3);padding:1px 6px;border-radius:4px}
   @keyframes fadeIn{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:translateY(0)}}
-
-  .tool .t-body{padding:14px;display:flex;flex-direction:column;gap:10px}
-  .field{display:flex;flex-direction:column;gap:4px}
-  .field label{font-size:11.5px;letter-spacing:0;text-transform:none;color:var(--ink-3);font-weight:500}
-  .field input{padding:8px 12px;font-size:13.5px;font-family:'Inter';text-align:right;border-radius:6px;font-variant-numeric:tabular-nums;background:#ffffff}
-  .field .suffix{position:relative}
-  .field .suffix input{padding-right:30px;width:100%}
-  .field .suffix .s{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:'Inter';font-size:12px;color:var(--ink-3);pointer-events:none}
-  .field .auto-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:2px 5px;border:1px solid var(--line);background:var(--bg-1);cursor:pointer}
-  .field .auto-btn:hover{color:var(--acid);border-color:var(--acid)}
-  .field .has-auto input{padding-left:54px}
-  .results{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line);margin-top:4px;padding-top:10px}
-  .results .res{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--line)}
-  .results .res:last-child{border-bottom:0}
-  .results .res .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
-  .results .res .v{font-family:'Inter';font-size:14px;color:var(--ink)}
-  .results .res .v.up{color:var(--positive)}
-  .results .res .v.down{color:var(--red)}
-  .results .res .v.muted{color:var(--ink-3)}
-  .results .res .v.amber{color:var(--amber)}
-
-  /* Diversification */
-  .score{display:flex;align-items:flex-end;gap:14px}
-  .score .num{font-family:'Inter';font-size:42px;line-height:1;letter-spacing:-.04em;font-weight:600;font-variant-numeric:tabular-nums}
-  .score .num.green{color:var(--positive)}
-  .score .num.amber{color:var(--amber)}
-  .score .num.red{color:var(--red)}
-  .score .meta{display:flex;flex-direction:column;gap:2px;padding-bottom:6px}
-  .score .meta .l{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
-  .score .meta .s{font-family:'Inter';font-size:11.5px;color:var(--ink-2)}
-  .barchart{display:flex;flex-direction:column;gap:6px;margin-top:4px}
-  .barchart .br{display:grid;grid-template-columns:90px 1fr 56px;gap:8px;align-items:center}
-  .barchart .br .lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
-  .barchart .br .track{height:7px;background:var(--bg-2);border:1px solid var(--line);position:relative}
-  .barchart .br .fill{position:absolute;left:0;top:0;bottom:0;background:var(--blue);transition:width 200ms ease}
-  .barchart .br .fill.warn{background:var(--amber)}
-  .barchart .br .fill.bad{background:var(--red)}
-  .barchart .br .pc{font-family:'Inter';font-size:11.5px;color:var(--ink-2);text-align:right}
-  .warn-row{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid rgba(184,133,44,.40);background:rgba(184,133,44,.10);color:var(--amber);font-size:11.5px;letter-spacing:.02em;margin-top:6px;line-height:1.4}
-  .warn-row.bad{border-color:rgba(110,29,46,.35);background:rgba(255,77,77,.06);color:var(--red)}
-  .warn-row .dot{width:6px;height:6px;background:currentColor;flex-shrink:0;margin-top:5px}
-  .warn-row+.warn-row{margin-top:4px}
-
-  /* Cashflow projection table */
-  table.cf{width:100%;border-collapse:collapse}
-  table.cf th,table.cf td{padding:7px 10px;border-bottom:1px solid var(--line);font-size:11.5px;text-align:right}
-  table.cf th:first-child,table.cf td:first-child{text-align:left}
-  table.cf th{font-family:'Inter';font-weight:500;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);background:var(--bg-2)}
-  table.cf td.mono{font-family:'Inter'}
-  table.cf td.acid{color:var(--positive)}
-  table.cf td.muted{color:var(--ink-3)}
-
-  /* Monthly report */
-  .report{display:flex;flex-direction:column;gap:10px}
-  .report .row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--line);font-size:12px}
-  .report .row:last-child{border-bottom:0}
-  .report .row .k{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
-  .report .row .v{font-family:'Inter';font-size:13px;color:var(--ink);text-align:right}
-  .report .row .v.up{color:var(--positive)}
-  .report .row .v.down{color:var(--red)}
-  .report .row .v small{display:block;font-family:'Inter';font-size:9.5px;color:var(--ink-3);letter-spacing:.02em;text-transform:none;margin-top:2px}
-  .report .periodbar{font-family:'Inter';font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;padding:4px 0 6px;border-bottom:1px solid var(--line)}
-
-  /* MC progress */
-  .mc-prog{display:flex;align-items:center;gap:8px;font-family:'Inter';font-size:11px;color:var(--ink-3)}
-  .mc-prog .bar{flex:1;height:4px;background:var(--bg-2);border:1px solid var(--line);position:relative}
-  .mc-prog .bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--acid);transition:width 80ms linear;width:0}
 
   /* Import/Export */
   .ie-actions{display:flex;flex-direction:column;gap:8px}
@@ -368,48 +291,6 @@
   }
 
   /* ============================================================
-     TOOLS NAV (Dashboard → Tools-Seite)
-     ============================================================ */
-  .tools-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:0}
-  .tnav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:16px 18px;background:var(--bg-1);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(9,9,11,.03);transition:all 150ms ease;min-height:64px}
-  .tnav:hover{border-color:var(--ink-3);box-shadow:0 2px 6px rgba(9,9,11,.06);transform:translateY(-1px)}
-  .tnav:active{transform:translateY(0)}
-  .tnav-k{font-size:11px;color:var(--acid);background:var(--acid-glow);padding:4px 8px;border-radius:4px;font-weight:600;letter-spacing:.04em;min-width:24px;text-align:center}
-  .tnav-t{font-size:14.5px;font-weight:600;color:var(--ink);letter-spacing:-.005em;line-height:1.25}
-  .tnav-d{display:none;font-size:12px;color:var(--ink-3);grid-column:2;grid-row:2;margin-top:2px}
-  .tnav-arr{font-size:18px;color:var(--ink-4);font-weight:400}
-  .tnav:hover .tnav-arr{color:var(--acid)}
-  @media (min-width:761px){
-    .tnav{grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;align-items:start}
-    .tnav-d{display:block}
-    .tnav-t{grid-column:2;grid-row:1}
-    .tnav-k{grid-row:1 / span 2;align-self:center}
-    .tnav-arr{grid-row:1 / span 2;align-self:center}
-  }
-  @media (max-width:980px){.tools-nav{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:560px){.tools-nav{grid-template-columns:1fr}}
-
-  /* ============================================================
-     TOOLS PAGE — Subtopbar + Back-Buttons
-     ============================================================ */
-  .topbar-sub{align-items:center}
-  .topbar-sub .brand{flex-wrap:wrap;gap:18px}
-  .back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg-1);font-size:13.5px;color:var(--ink-2);font-weight:500;text-decoration:none;transition:all 150ms ease;min-height:36px}
-  .back:hover{border-color:var(--ink-3);color:var(--ink)}
-  .back-foot{display:flex;align-items:center;justify-content:center;gap:6px;margin:32px auto 0;padding:12px 22px;border:1px solid var(--line);border-radius:8px;background:var(--bg-1);font-size:14px;color:var(--ink-2);font-weight:500;text-decoration:none;max-width:280px;transition:all 150ms ease}
-  .back-foot:hover{border-color:var(--ink-3);color:var(--ink);background:var(--bg-3)}
-  .page-tools .tools{grid-template-columns:repeat(2,1fr)}
-  @media (max-width:980px){.page-tools .tools{grid-template-columns:1fr}}
-
-  /* Solo-Modus: tools.html mit Hash zeigt NUR das angefragte Tool */
-  .page-tools[data-mode="solo"] .tools{grid-template-columns:1fr;max-width:680px;margin:0 auto}
-  .page-tools[data-mode="solo"] .tool{display:none}
-  .page-tools[data-mode="solo"] .tool.focused{display:flex;border-color:var(--line);box-shadow:0 1px 2px rgba(9,9,11,.03)}
-
-  /* Index-Modus: kein Hash → Auswahlraster */
-  .tool.focused{border-color:var(--acid);box-shadow:0 0 0 3px var(--acid-glow),0 1px 2px rgba(9,9,11,.03)}
-
-  /* ============================================================
      MOBILE — kompakteres Layout (≤760 px)
      ============================================================ */
   @media (max-width:760px){
@@ -417,8 +298,6 @@
     .topbar{flex-direction:column;align-items:stretch;gap:10px;padding-bottom:14px;margin-bottom:14px}
     .topbar .brand{gap:10px}
     .topbar .total{text-align:left;align-self:stretch}
-    .topbar-sub{flex-direction:row;align-items:center}
-    .topbar-sub .brand .clock{display:none}
 
     /* Panels — schmaler, weniger Innenabstand */
     section.panel{border-radius:8px;overflow:hidden}
@@ -487,24 +366,11 @@
     .section-strip .desc{font-size:11.5px;line-height:1.4}
     .section-strip .line{display:none}
 
-    /* Tool-Cards (auf tools.html): mehr Atemraum */
-    .tools{gap:14px}
-    .tool .t-head{padding:12px 14px}
-    .tool .t-body{padding:12px 14px;min-width:0}
-    .tool .results{font-size:13px}
-    .field label{font-size:11px}
     input,select,textarea{font-size:16px} /* iOS-Zoom verhindern */
-    /* Cashflow-Tabelle kompakter — sonst überläuft sie auf engen Screens */
-    table.cf{table-layout:fixed;width:100%}
-    table.cf th,table.cf td{padding:6px 6px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    table.cf th:first-child,table.cf td:first-child{width:22%}
   }
 
   @media (max-width:420px){
     body{padding:10px 8px 60px}
     .total .value{font-size:26px}
     .brand .name{font-size:17px}
-    .tnav{padding:14px;min-height:56px}
-    .tnav-t{font-size:13.5px}
-    .tnav-k{font-size:10.5px;padding:3px 6px}
   }

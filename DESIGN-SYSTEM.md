@@ -57,7 +57,7 @@ Alle Farbtokens leben als CSS Custom Properties im `:root` von `Vermögensaufste
 | Gesamtvermögen | 40 px | 600 | -0.025 em |
 | Section H3 | 15 px | 600 | -0.01 em |
 | Panel H2 | 14 px | 600 | -0.01 em |
-| Cat-Title / Tool-Title | 13.5–14 px | 600 | -0.005 em |
+| Cat-Title | 13.5–14 px | 600 | -0.005 em |
 | Body / Tabellen | 13–13.5 px | 400 | 0 |
 | Labels | 11.5–12 px | 500 | 0 |
 | Hilfstext / Captions | 11–12 px | 400 | 0 |
@@ -70,9 +70,9 @@ Kein All-Caps-Letterspacing, keine kursiven Untertitel — alles in natürlicher
 
 - **Body-Padding**: 24 px × 32 px, max-width 1480 px, zentriert
 - **Panel-Padding**: Head 14 × 18 px, Body 18 px
-- **Border-Radius**: 6 px (Buttons/Inputs/Inline), 10 px (Panels/Tools)
+- **Border-Radius**: 6 px (Buttons/Inputs/Inline), 10 px (Panels)
 - **Section-Abstand**: 32 px oben (`.section-strip { margin-top: 32px }`)
-- **Spalten**: 2/3 + 1/3 für Verlauf + Allokation; 50/50 für Szenario + Radar; 3 Spalten für Tools (auf 1280 px → 2 Spalten, auf 760 px → 1 Spalte)
+- **Spalten**: 2/3 + 1/3 für Verlauf + Allokation; 50/50 für Szenario + Radar
 
 ---
 
@@ -125,7 +125,7 @@ Weißer Hintergrund, 6 px Radius, `--line` Border. Im Fokus: `--acid` Border + 3
 <div class="help-pop" id="help-id">…</div>
 ```
 
-`?`-Kreis (20 px, weiß) neben dem Tool-Titel. Klick zeigt den Erklärungsblock direkt unter dem Header an — `--bg-2` Hintergrund, 3 px linke Border in `--acid`. Inline-Code (`<code>`) erscheint als Pille mit JetBrains Mono.
+`?`-Kreis (20 px, weiß) neben dem Panel-Titel. Klick zeigt den Erklärungsblock direkt unter dem Header an — `--bg-2` Hintergrund, 3 px linke Border in `--acid`. Inline-Code (`<code>`) erscheint als Pille mit JetBrains Mono.
 
 ### Chart-Empty-State
 
@@ -187,7 +187,6 @@ Spezifische Charts:
 
 | Breakpoint | Anpassung |
 |---|---|
-| `< 1280 px` | Tools-Grid 3 → 2 Spalten |
 | `< 1100 px` | Top-Row 2/3+1/3 stapelt sich, Half-Row stapelt sich |
 | `< 900 px` | Sparbar 4 → 2 Spalten, Addform-Grid stapelt |
-| `< 760 px` | Tools-Grid → 1 Spalte; Gesamtvermögen-Schriftgröße sinkt auf 30 px; Brand-Untertitel & Uhr ausgeblendet |
+| `< 760 px` | Gesamtvermögen-Schriftgröße sinkt auf 30 px; Brand-Untertitel & Uhr ausgeblendet |
