@@ -426,9 +426,9 @@ const donutCenterPlugin = {
     const cy = (chartArea.top + chartArea.bottom) / 2;
     ctx.save();
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#7c8aa5'; ctx.font = "500 9.5px 'Inter', system-ui, sans-serif";
+    ctx.fillStyle = '#6b7280'; ctx.font = "500 9.5px 'Inter', system-ui, sans-serif";
     ctx.fillText('GESAMT', cx, cy - 14);
-    ctx.fillStyle = '#f4f7fb'; ctx.font = "600 16px 'JetBrains Mono', ui-monospace, monospace";
+    ctx.fillStyle = '#0b0d12'; ctx.font = "600 16px 'JetBrains Mono', ui-monospace, monospace";
     const lbl = tot >= 1_000_000 ? (tot/1_000_000).toFixed(2).replace('.',',') + '\u00a0Mio\u00a0€'
               : tot >= 100_000 ? Math.round(tot/1000) + '.000\u00a0€'
               : fmtEUR0.format(tot);
@@ -465,7 +465,7 @@ function renderAllocation(){
   const finalData = allZero ? [1,1,1] : data;
   if (donutChart){
     donutChart.data.datasets[0].data = finalData;
-    donutChart.data.datasets[0].backgroundColor = allZero ? ['#34496a','#34496a','#34496a'] : colors;
+    donutChart.data.datasets[0].backgroundColor = allZero ? ['#d1d5dc','#d1d5dc','#d1d5dc'] : colors;
     donutChart.options.plugins.donutLabels = { disabled: allZero };
     donutChart.options.plugins.donutCenter = { disabled: allZero };
     donutChart.update('none');
@@ -477,8 +477,8 @@ function renderAllocation(){
       labels: sums.map(s => s.label),
       datasets: [{
         data: finalData,
-        backgroundColor: allZero ? ['#34496a','#34496a','#34496a'] : colors,
-        borderColor: '#101d30', borderWidth: 2, hoverOffset: 6,
+        backgroundColor: allZero ? ['#d1d5dc','#d1d5dc','#d1d5dc'] : colors,
+        borderColor: '#ffffff', borderWidth: 2, hoverOffset: 6,
       }]
     },
     options: {
@@ -488,7 +488,7 @@ function renderAllocation(){
         donutLabels:{ disabled: allZero },
         donutCenter:{ disabled: allZero },
         tooltip:{
-          backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1,
+          backgroundColor:'#0b0d12', borderColor:'#454a52', borderWidth:1,
           titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12},
           padding:10, displayColors:false,
           callbacks:{ label:(c) => {
@@ -526,8 +526,8 @@ const lineGlowPlugin = {
     ctx.save();
     const r = 16;
     const g = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, r);
-    g.addColorStop(0, 'rgba(62,166,255,.45)');
-    g.addColorStop(1, 'rgba(62,166,255,0)');
+    g.addColorStop(0, 'rgba(5,80,208,.35)');
+    g.addColorStop(1, 'rgba(5,80,208,0)');
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.arc(point.x, point.y, r, 0, Math.PI * 2);
@@ -550,17 +550,17 @@ function renderLineChart(){
     values.push(total());
   }
   const datasets = [{
-    label:'Vermögen', data: values, borderColor:'#3ea6ff',
+    label:'Vermögen', data: values, borderColor:'#0550d0',
     backgroundColor:(c)=>{ const {chart}=c;const {ctx,chartArea}=chart;
-      if (!chartArea) return 'rgba(62,166,255,.05)';
+      if (!chartArea) return 'rgba(5,80,208,.04)';
       const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-      g.addColorStop(0,'rgba(62,166,255,.30)'); g.addColorStop(1,'rgba(62,166,255,0)'); return g; },
+      g.addColorStop(0,'rgba(5,80,208,.20)'); g.addColorStop(1,'rgba(5,80,208,0)'); return g; },
     fill:true, cubicInterpolationMode:'monotone', borderWidth:2.5,
     borderCapStyle:'round', borderJoinStyle:'round',
     pointRadius:(c)=> c.dataIndex === values.length-1 ? 5 : 2.5,
     pointHoverRadius:6, pointHitRadius:10,
-    pointBackgroundColor:(c)=> c.dataIndex === values.length-1 ? '#3ea6ff' : '#101d30',
-    pointBorderColor:'#3ea6ff', pointBorderWidth:1.5,
+    pointBackgroundColor:(c)=> c.dataIndex === values.length-1 ? '#0550d0' : '#ffffff',
+    pointBorderColor:'#0550d0', pointBorderWidth:1.5,
   }];
   if (lineChart){
     lineChart.data.labels = labels;
@@ -577,7 +577,7 @@ function renderLineChart(){
       plugins:{
         legend:{ display:false },
         tooltip:{
-          backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1,
+          backgroundColor:'#0b0d12', borderColor:'#454a52', borderWidth:1,
           titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12},
           padding:10, displayColors:false,
           callbacks:{
@@ -592,8 +592,8 @@ function renderLineChart(){
         }
       },
       scales:{
-        x:{ grid:{ display:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, maxRotation:0, autoSkipPadding:18, maxTicksLimit:8 } },
-        y:{ grid:{ color:'rgba(255,255,255,.06)', drawTicks:false }, border:{display:false}, ticks:{ color:'#7c8aa5', font:{family:'Inter',size:10}, padding:8, maxTicksLimit:5, callback:(v)=> fmtEUR0.format(v) } }
+        x:{ grid:{ display:false }, border:{display:false}, ticks:{ color:'#6b7280', font:{family:'Inter',size:10}, maxRotation:0, autoSkipPadding:18, maxTicksLimit:8 } },
+        y:{ grid:{ color:'rgba(11,13,18,.05)', drawTicks:false }, border:{display:false}, ticks:{ color:'#6b7280', font:{family:'Inter',size:10}, padding:8, maxTicksLimit:5, callback:(v)=> fmtEUR0.format(v) } }
       }
     }
   });
@@ -698,9 +698,9 @@ function renderScenario(){
   const pess = projectFV(start, rate, years, 0.03);
 
   const datasets = [
-    { label:'Optimistisch · 10 % p.a.', data:opt,  borderColor:'#34d399', backgroundColor:'rgba(52,211,153,.08)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
-    { label:'Realistisch · 6 % p.a.',   data:real, borderColor:'#3ea6ff', backgroundColor:'rgba(62,166,255,.08)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
-    { label:'Pessimistisch · 3 % p.a.', data:pess, borderColor:'#f4685f', backgroundColor:'rgba(244,104,95,.06)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
+    { label:'Optimistisch · 10 % p.a.', data:opt,  borderColor:'#16a34a', backgroundColor:'rgba(22,163,74,.06)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
+    { label:'Realistisch · 6 % p.a.',   data:real, borderColor:'#0550d0', backgroundColor:'rgba(5,80,208,.06)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
+    { label:'Pessimistisch · 3 % p.a.', data:pess, borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,.05)', borderWidth:2, pointRadius:0, tension:.2, fill:false },
   ];
   const ctx = document.getElementById('scen-chart');
   if (scenChart){ scenChart.data.labels = labels; scenChart.data.datasets = datasets; scenChart.update('none'); }
@@ -708,13 +708,13 @@ function renderScenario(){
     responsive:true, maintainAspectRatio:false,
     interaction:{mode:'index',intersect:false},
     plugins:{
-      legend:{ display:true, position:'bottom', align:'start', labels:{ color:'#7c8aa5', font:{family:'Inter',size:10.5,weight:'500'}, boxWidth:10, boxHeight:10, padding:10, usePointStyle:false } },
-      tooltip:{ backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:11}, padding:9, displayColors:true, boxWidth:8, boxHeight:8,
+      legend:{ display:true, position:'bottom', align:'start', labels:{ color:'#6b7280', font:{family:'Inter',size:10.5,weight:'500'}, boxWidth:10, boxHeight:10, padding:10, usePointStyle:false } },
+      tooltip:{ backgroundColor:'#0b0d12', borderColor:'#454a52', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:11}, padding:9, displayColors:true, boxWidth:8, boxHeight:8,
         callbacks:{ label:(c)=> `  ${c.dataset.label}: ${fmtEUR0.format(c.parsed.y)}` } }
     },
     scales:{
-      x:{ grid:{color:'rgba(255,255,255,.06)',drawTicks:false}, border:{display:false}, ticks:{color:'#7c8aa5',font:{family:'Inter',size:10},autoSkipPadding:18}},
-      y:{ grid:{color:'rgba(255,255,255,.06)',drawTicks:false}, border:{display:false}, ticks:{color:'#7c8aa5',font:{family:'Inter',size:10},padding:6,callback:(v)=>fmtEUR0.format(v)}}
+      x:{ grid:{color:'rgba(11,13,18,.05)',drawTicks:false}, border:{display:false}, ticks:{color:'#6b7280',font:{family:'Inter',size:10},autoSkipPadding:18}},
+      y:{ grid:{color:'rgba(11,13,18,.05)',drawTicks:false}, border:{display:false}, ticks:{color:'#6b7280',font:{family:'Inter',size:10},padding:6,callback:(v)=>fmtEUR0.format(v)}}
     }
   }});
 
@@ -792,10 +792,10 @@ function renderRadar(){
     datasets: [{
       label:'Portfolio',
       data: values,
-      borderColor:'#3ea6ff',
-      backgroundColor:'rgba(62,166,255,.20)',
+      borderColor:'#0550d0',
+      backgroundColor:'rgba(5,80,208,.14)',
       borderWidth:2,
-      pointBackgroundColor:'#3ea6ff',
+      pointBackgroundColor:'#0550d0',
       pointRadius:3.5,
       pointHoverRadius:5,
     }]
@@ -807,15 +807,15 @@ function renderRadar(){
       responsive:true, maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        tooltip:{ backgroundColor:'#16253c', borderColor:'#34496a', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12}, padding:10,
+        tooltip:{ backgroundColor:'#0b0d12', borderColor:'#454a52', borderWidth:1, titleFont:{family:'Inter',size:11,weight:'600'}, bodyFont:{family:'Inter',size:12}, padding:10,
           callbacks:{ label:(c)=> '  Score: ' + c.parsed.r + ' / 100' } }
       },
       scales:{
         r:{
           min:0, max:100,
-          angleLines:{ color:'rgba(255,255,255,.09)' },
-          grid:{ color:'rgba(255,255,255,.07)' },
-          pointLabels:{ color:'#aebbd1', font:{family:'Inter',size:12,weight:'500'}, padding:8 },
+          angleLines:{ color:'rgba(11,13,18,.07)' },
+          grid:{ color:'rgba(11,13,18,.05)' },
+          pointLabels:{ color:'#454a52', font:{family:'Inter',size:12,weight:'500'}, padding:8 },
           ticks:{ display:false, stepSize:25, backdropColor:'transparent' },
         }
       }

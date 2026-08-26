@@ -1,55 +1,65 @@
 # Design System — Vermögensaufstellung
 
-Dunkles Dashboard-Vokabular. Inspiration: Deutsche Bank Mobile (dunkles Navy als
-Grundfläche, helles Blau als Akzent, weiße Primär-Buttons) — kein Neobroker-Look,
-keine Verspieltheit, keine Gradients auf großen Flächen.
+Helles Dashboard-Vokabular mit Blau als klar abgegrenztem Akzent. Inspiration:
+die echte Deutsche Bank Mobile App (verifiziert über offizielle Screenshots von
+deutsche-bank.de, nicht nur Marketing-Mockups) — dort ist der Hintergrund
+überwiegend **weiß**, Blau taucht nur in abgegrenzten Flächen auf: dem
+Saldo-Kreis auf der Startseite, CTA-Buttons, einzelnen Karten. Kein
+Neobroker-Look, keine Verspieltheit, kein durchgehender dunkler Hintergrund.
+
+Die App hatte zwischenzeitlich eine Variante mit durchgehend dunklem
+Navy-Hintergrund — das war eine Fehleinschätzung auf Basis eines einzelnen,
+nicht repräsentativen Onboarding-Mockups. Seit der Korrektur gilt: **Blau ist
+ein Element, kein Hintergrund.**
 
 ---
 
 ## Farben
 
 Alle Farbtokens leben als CSS Custom Properties im `:root` von `app.css`.
+`--acid` (`#0550d0`) und `--navy` (`#1e2978`) sind direkt aus den offiziellen
+App-Screenshots gepixelt (SEPA-Überweisung-Button bzw. Interner-Kontoübertrag-
+Button) — keine Schätzung.
 
 ### Neutrale (Hintergrund / Linien / Text)
 
 | Token | Hex | Verwendung |
 |---|---|---|
-| `--bg` | `#0a1420` | Seiten-Hintergrund (dunkles Navy) |
-| `--bg-1` | `#101d30` | Panel-Hintergrund |
-| `--bg-2` | `#16253c` | Sub-Card / Help-Popover / Inputs |
-| `--bg-3` | `#1c2e48` | Hover, Pille-Hintergrund |
-| `--line` | `#243854` | Hairline-Border |
-| `--line-2` | `#34496a` | Border mit etwas mehr Gewicht |
-| `--ink` | `#f4f7fb` | Primärer Text (fast Weiß) |
-| `--ink-2` | `#aebbd1` | Sekundärer Text |
-| `--ink-3` | `#7c8aa5` | Tertiärer Text / Labels |
-| `--ink-4` | `#4f5d78` | Disabled / Empty States |
+| `--bg` | `#f5f6f8` | Seiten-Hintergrund (helles Grau) |
+| `--bg-1` | `#ffffff` | Panel-Hintergrund |
+| `--bg-2` | `#f7f8fa` | Sub-Card / Help-Popover / Inputs |
+| `--bg-3` | `#eef0f3` | Hover, Pille-Hintergrund |
+| `--line` | `#e3e5ea` | Hairline-Border |
+| `--line-2` | `#d1d5dc` | Border mit etwas mehr Gewicht |
+| `--ink` | `#0b0d12` | Primärer Text (fast Schwarz) |
+| `--ink-2` | `#454a52` | Sekundärer Text |
+| `--ink-3` | `#6b7280` | Tertiärer Text / Labels |
+| `--ink-4` | `#9aa0aa` | Disabled / Empty States |
 
 ### Akzentfarben
 
 | Token | Hex | Verwendung |
 |---|---|---|
-| `--acid` | `#3ea6ff` | Primärer Akzent: Linienchart, Fokus-Ring, aktive Segmented-Control |
-| `--acid-dim` | `#2b86d8` | Akzent-Hover (nicht-weiße Elemente) |
-| `--on-accent` | `#04101c` | Textfarbe auf hellen Flächen (weiße Primär-Buttons, aktiver Akzent-Chip) |
-| `--positive` | `#34d399` | Positive Deltas, Gewinner-Badges |
-| `--red` | `#f4685f` | Negative Deltas, Verlierer-Badges |
-| `--amber` | `#f2b544` | Warn-States (mittlere Konzentration) |
-| `--gold` | `#f2b544` | Akzent-Highlights |
+| `--acid` | `#0550d0` | Primärer Akzent: Buttons, Linienchart, Fokus-Ring, aktive Segmented-Control |
+| `--acid-dim` | `#0442ab` | Akzent-Hover |
+| `--navy` | `#1e2978` | Zweites, dunkleres Blau — nur für den Hero-Verlauf der Gesamtvermögens-Kachel |
+| `--on-accent` | `#ffffff` | Textfarbe auf blauen Flächen |
+| `--positive` | `#16a34a` | Positive Deltas, Gewinner-Badges |
+| `--red` | `#dc2626` | Negative Deltas, Verlierer-Badges |
+| `--amber` | `#ca8a04` | Warn-States (mittlere Konzentration) |
+| `--gold` | `#ca8a04` | Akzent-Highlights |
 
-Primär-Buttons (`.btn.primary`) weichen bewusst vom `--acid`-Muster ab: **weißer
-Hintergrund, dunkler Text** (`--on-accent`) — analog zum „Next"-Button in der
-Deutsche-Bank-Mobile-App. Sekundäre Akzent-Elemente (aktiver Tab in der
-Segmented-Control, aktiver Help-Button) nutzen weiterhin `--acid`-Fläche mit
-`--on-accent`-Text.
+Primär-Buttons (`.btn.primary`) sind blau mit weißem Text (`--acid` /
+`--on-accent`) — analog zum „SEPA Überweisung"-Button in der echten App.
+Sekundär-Buttons bleiben neutral (`--bg-2`, hairline border).
 
 ### Kategorie-Farben
 
 | Kategorie | Hex |
 |---|---|
-| Liquide | `#22d3ee` (Cyan) |
-| Kapitalmarkt | `#3ea6ff` (= `--acid`) |
-| Sachwerte | `#f0973d` (Orange) |
+| Liquide | `#0891b2` (Cyan) |
+| Kapitalmarkt | `#0550d0` (= `--acid`) |
+| Sachwerte | `#b45309` (Amber) |
 
 ---
 
@@ -79,7 +89,7 @@ Kein All-Caps-Letterspacing, keine kursiven Untertitel — alles in natürlicher
 
 - **Body-Padding**: 24 px × 32 px, max-width 1480 px, zentriert
 - **Panel-Padding**: Head 14 × 18 px, Body 18 px
-- **Border-Radius**: 6 px (Buttons/Inputs/Inline), 10 px (Panels)
+- **Border-Radius**: 6 px (Buttons/Inputs/Inline), 10 px (Panels), 16 px (Hero-Kachel Gesamtvermögen — bewusste Ausnahme)
 - **Section-Abstand**: 32 px oben (`.section-strip { margin-top: 32px }`)
 - **Spalten**: 2/3 + 1/3 für Verlauf + Allokation; 50/50 für Szenario + Radar
 
@@ -104,12 +114,30 @@ Kein All-Caps-Letterspacing, keine kursiven Untertitel — alles in natürlicher
 
 Hairline-Border `--line`, weißer Hintergrund, 10 px Radius, 1 px Soft-Shadow.
 
+### Hero-Kachel (Gesamtvermögen)
+
+```html
+<div class="total">
+  <span class="label">Gesamtvermögen</span>
+  <div class="value">91.000,00 €</div>
+  <span class="delta up">▲ +2.000,00 € / +2,25 %</span>
+</div>
+```
+
+Einziges Element mit vollflächigem Blau — bewusst als Ausnahme, angelehnt an
+den Saldo-Kreis auf der Startseite der echten App. Verlauf
+`linear-gradient(135deg, var(--acid) 0%, var(--navy) 100%)`, 16 px Radius
+(großzügiger als der Rest der App), weißer Text, Delta-Pille als
+halbtransparente weiße Fläche (`rgba(255,255,255,.14)`) statt der sonst
+üblichen Grün/Rot-Töne — die stehen stattdessen als helle Varianten
+(`#baf3d3` / `#ffd0cc`) für ausreichend Kontrast auf Blau.
+
 ### Button
 
 | Variante | Klasse | Aussehen |
 |---|---|---|
 | Sekundär | `.btn` | `--bg-2`, hairline border |
-| Primär | `.btn .primary` | Weißer Hintergrund, dunkler Text (`--on-accent`) |
+| Primär | `.btn .primary` | `--acid` Hintergrund, weißer Text |
 | Klein | `.btn .tiny` | Gleiches Vokabular, kleinere Padding |
 | Gefahr | `.btn .danger` | Hover wird rot |
 
@@ -157,11 +185,11 @@ Allgemeine Konventionen:
 
 | Element | Wert |
 |---|---|
-| Grid-Linien | `rgba(255,255,255,.06)` |
-| Tick-Farbe | `#7c8aa5` (= `--ink-3`) |
+| Grid-Linien | `rgba(11,13,18,.05)` |
+| Tick-Farbe | `#6b7280` (= `--ink-3`) |
 | Tick-Font | Inter 10 px |
-| Tooltip-Hintergrund | `#16253c` (= `--bg-2`) |
-| Tooltip-Border | `#34496a` (= `--line-2`) |
+| Tooltip-Hintergrund | `#0b0d12` (= `--ink`, dunkler Chip auf hellem Grund) |
+| Tooltip-Border | `#454a52` (= `--ink-2`) |
 | Tooltip-Body | Inter 11–12 px |
 | Linien-Stroke | 2.5 px, runde Kappen/Verbindungen |
 | Punkt-Radius | 3 px normal, 4 px aktueller Punkt |
@@ -172,10 +200,10 @@ Hex/rgba-Literale in `js/dashboard.js` dupliziert. Bei einer Token-Änderung in
 werden.
 
 Spezifische Charts:
-- **Verlauf**: Liniefarbe `--acid` (`#3ea6ff`), Flächengradient `rgba(62,166,255,.30) → 0`, `cubicInterpolationMode:'monotone'` (verhindert optisches Über-/Unterschwingen zwischen Punkten). Zeitbereiche: 3M / 6M / 1J / 3J / 5J / Alle. Punkte außer dem aktuellsten sind „hohl" (Fill = `--bg-1`) und kleiner (2.5px), damit sich der aktuelle Punkt (5px, voll gefüllt) als Fokuspunkt absetzt — zusätzlich mit weichem Leuchtkreis (`lineGlowPlugin`) hinterlegt. Keine vertikalen Gridlines, Legende ausgeblendet (nur eine Serie).
-- **Donut**: 3 Kategoriefarben, Border 2 px in `--bg-1` (statt Weiß) — Segmente wirken gegen das dunkle Panel „ausgeschnitten". Plugin zeichnet ein gerundetes %-Label (`'JetBrains Mono'`, 600, mit Lesbarkeits-Schatten) in jedes Segment, aber nur wenn es in die Segmentbreite passt (Fit-Check via `measureText` gegen die Bogenlänge) — zu schmale Segmente bleiben ohne Label, die Legende darunter zeigt den exakten Wert immer. Gesamtsumme in der Mitte in `'JetBrains Mono'` 600, Label „GESAMT" in `'Inter'`.
+- **Verlauf**: Liniefarbe `--acid` (`#0550d0`), Flächengradient `rgba(5,80,208,.20) → 0`, `cubicInterpolationMode:'monotone'` (verhindert optisches Über-/Unterschwingen zwischen Punkten). Zeitbereiche: 3M / 6M / 1J / 3J / 5J / Alle. Punkte außer dem aktuellsten sind „hohl" (Fill = `--bg-1`, also weiß) und kleiner (2.5px), damit sich der aktuelle Punkt (5px, voll gefüllt) als Fokuspunkt absetzt — zusätzlich mit weichem Leuchtkreis (`lineGlowPlugin`) hinterlegt. Keine vertikalen Gridlines, Legende ausgeblendet (nur eine Serie).
+- **Donut**: 3 Kategoriefarben, Border 2 px in `--bg-1` (Weiß) — Segmente wirken gegen das weiße Panel „ausgeschnitten". Plugin zeichnet ein gerundetes %-Label (`'JetBrains Mono'`, 600, weiß mit Lesbarkeits-Schatten) in jedes Segment, aber nur wenn es in die Segmentbreite passt (Fit-Check via `measureText` gegen die Bogenlänge) — zu schmale Segmente bleiben ohne Label, die Legende darunter zeigt den exakten Wert immer. Gesamtsumme in der Mitte in `'JetBrains Mono'` 600 (`--ink`), Label „GESAMT" in `'Inter'` (`--ink-3`).
 - **Szenario**: 3 Linien — Pessimistisch (`--red`), Realistisch (`--acid`), Optimistisch (`--positive`), keine Fläche.
-- **Radar**: Sechseck-Gitter, `--acid` Fläche bei `rgba(62,166,255,.20)`, 0–100 Skala.
+- **Radar**: Sechseck-Gitter, `--acid` Fläche bei `rgba(5,80,208,.14)`, 0–100 Skala.
 
 ---
 

@@ -9,9 +9,9 @@
 const LS_KEY = 'vermoegen.v2';
 const LS_KEY_OLD = 'vermoegen.v1';
 const CATS = [
-  { id:'LIQUIDE',     label:'Liquide',     color:'#22d3ee', sw:'sw-liq' },
-  { id:'KAPITALMARKT',label:'Kapitalmarkt',color:'#3ea6ff', sw:'sw-kap' },
-  { id:'SACHWERTE',   label:'Sachwerte',   color:'#f0973d', sw:'sw-sac' },
+  { id:'LIQUIDE',     label:'Liquide',     color:'#0891b2', sw:'sw-liq' },
+  { id:'KAPITALMARKT',label:'Kapitalmarkt',color:'#0550d0', sw:'sw-kap' },
+  { id:'SACHWERTE',   label:'Sachwerte',   color:'#b45309', sw:'sw-sac' },
 ];
 const DEFAULT_NAMES = {
   LIQUIDE:      ['Trade Republic Tagesgeld','Festgeld'],
