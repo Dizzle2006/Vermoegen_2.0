@@ -13,7 +13,7 @@ const CATS = [
   { id:'KAPITALMARKT',label:'Kapitalmarkt',color:'#3ea6ff', sw:'sw-kap' },
   { id:'SACHWERTE',   label:'Sachwerte',   color:'#f0973d', sw:'sw-sac' },
 ];
-const LOCKED = {
+const DEFAULT_NAMES = {
   LIQUIDE:      ['Trade Republic Tagesgeld','Festgeld'],
   KAPITALMARKT: ['Maxblue Depot','Cominvest Depot','Trade Republic Depot'],
   SACHWERTE:    ['Gold','Sachwerte'],
@@ -24,7 +24,7 @@ function uid(){ return Math.random().toString(36).slice(2,10) + Date.now().toStr
 function defaultState(){
   const entries = {};
   for (const c of CATS){
-    entries[c.id] = LOCKED[c.id].map(n => ({ id: uid(), name:n, value:0, locked:true, note:'', sparrate:0 }));
+    entries[c.id] = DEFAULT_NAMES[c.id].map(n => ({ id: uid(), name:n, value:0, note:'', sparrate:0 }));
   }
   return {
     entries,
@@ -51,7 +51,6 @@ function migrateV1(v1){
           id: e.id || uid(),
           name: e.name,
           value: Number(e.value) || 0,
-          locked: !!e.locked,
           note: e.note || '',
           sparrate: Number(e.sparrate) || 0,
         });
@@ -89,7 +88,7 @@ function loadState(){
       return defaultState();
     }
     s = JSON.parse(raw);
-    // Ensure category arrays exist + pad missing fields (no auto re-adding deleted locked entries)
+    // Ensure category arrays exist + pad missing fields (gelöschte Default-Einträge werden nicht automatisch neu angelegt)
     for (const c of CATS){
       if (!s.entries[c.id]) s.entries[c.id] = [];
       for (const e of s.entries[c.id]){

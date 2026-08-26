@@ -42,7 +42,6 @@ Alle Daten liegen in einem JSON-Objekt im `localStorage` unter dem Key **`vermoe
   id: string,           // uid()
   name: string,         // z.B. "Trade Republic Tagesgeld"
   value: number,        // aktueller Wert in €
-  locked: boolean,      // true für Default-Positionen (FIX-Badge)
   note: string,         // optionale Notiz
   sparrate: number,     // monatliche Sparrate in €
 }
@@ -98,17 +97,17 @@ const CATS = [
 ];
 ```
 
-Die Default-Positionen (mit `locked: true`) werden beim allerersten Start angelegt:
+Die Default-Positionen werden beim allerersten Start angelegt:
 
 ```js
-const LOCKED = {
+const DEFAULT_NAMES = {
   LIQUIDE:      ['Trade Republic Tagesgeld', 'Festgeld'],
   KAPITALMARKT: ['Maxblue Depot', 'Cominvest Depot', 'Trade Republic Depot'],
   SACHWERTE:    ['Gold', 'Sachwerte'],
 };
 ```
 
-Wenn eine Default-Position gelöscht wird, wird sie **nicht** automatisch wieder angelegt. Die `LOCKED`-Liste dient nur als initiale Seed-Quelle.
+Wenn eine Default-Position gelöscht wird, wird sie **nicht** automatisch wieder angelegt. Die `DEFAULT_NAMES`-Liste dient nur als initiale Seed-Quelle.
 
 ---
 

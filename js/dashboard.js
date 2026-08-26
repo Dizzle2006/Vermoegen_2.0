@@ -135,7 +135,6 @@ function renderAccordion(){
         <td>
           <div class="ename">
             <span class="ename-text">${escapeHtml(e.name)}</span>
-            ${e.locked ? '<span class="locked">FIX</span>' : ''}
             ${isWinner ? '<span class="winner">★ Gewinner</span>' : ''}
             ${isLoser ? '<span class="loser">▼ Verlierer</span>' : ''}
             ${noteOn ? `<span class="ename-note">${escapeHtml(e.note)}</span>` : ''}
@@ -148,9 +147,9 @@ function renderAccordion(){
           <button class="iconbtn ${noteOn?'note-on':''}" title="Notiz bearbeiten" data-note="${e.id}" data-cat="${c.id}">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
           </button>
-          ${e.locked ? '' : `<button class="iconbtn" title="Umbenennen" data-rename="${e.id}" data-cat="${c.id}">
+          <button class="iconbtn" title="Umbenennen" data-rename="${e.id}" data-cat="${c.id}">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M4 20h4l10-10-4-4L4 16v4z"/></svg>
-          </button>`}
+          </button>
           <button class="iconbtn danger" title="Löschen" data-del="${e.id}" data-cat="${c.id}">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13"/></svg>
           </button>
@@ -287,7 +286,7 @@ function startNoteEdit(catId, entryId){
 
 function startRename(catId, entryId){
   const entry = state.entries[catId].find(e => e.id === entryId);
-  if (!entry || entry.locked) return;
+  if (!entry) return;
   const tr = document.querySelector(`tr.entry[data-id="${entryId}"]`);
   if (!tr) return;
   const nameSpan = tr.querySelector('.ename-text');
@@ -356,7 +355,6 @@ function showAddForm(btn){
     state.entries[cat].push({
       id: uid(), name,
       value: parseNum(vl.value),
-      locked: false,
       note: nt.value.trim(),
       sparrate: parseNum(sp.value),
     });

@@ -35,7 +35,7 @@ Alle Farbtokens leben als CSS Custom Properties im `:root` von `app.css`.
 | `--positive` | `#34d399` | Positive Deltas, Gewinner-Badges |
 | `--red` | `#f4685f` | Negative Deltas, Verlierer-Badges |
 | `--amber` | `#f2b544` | Warn-States (mittlere Konzentration) |
-| `--gold` | `#f2b544` | Akzent-Highlights, FIX-Badge-Frame |
+| `--gold` | `#f2b544` | Akzent-Highlights |
 
 Primär-Buttons (`.btn.primary`) weichen bewusst vom `--acid`-Muster ab: **weißer
 Hintergrund, dunkler Text** (`--on-accent`) — analog zum „Next"-Button in der
@@ -144,7 +144,6 @@ Wenn ein Chart noch keine Daten hat: zentrierte weiße Karte mit Titel + Erklär
 
 | Klasse | Zweck |
 |---|---|
-| `.locked` | „FIX" Marker für Default-Positionen, grauer Pille |
 | `.winner` | „★ Gewinner" auf positivem Delta — grüner Pille |
 | `.loser` | „▼ Verlierer" auf negativem Delta — roter Pille |
 | `.total .delta.up` | Gesamtdelta positiv — grüner Pille mit Fill |
