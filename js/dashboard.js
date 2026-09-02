@@ -28,8 +28,21 @@ document.addEventListener('click', (ev) => {
    RENDER: HEADER / TOTAL / DELTA
    ============================================================ */
 function renderTotal(){
-  const t = total();
-  document.getElementById('total-value').innerHTML = fmtEUR.format(t).replace(/(,\d+)(\s?€)/, '<span class="cents">$1$2</span>');
+  const money = moneyTotal();
+  const tang = tangibleTotal();
+  document.getElementById('total-value').innerHTML = fmtEUR.format(money).replace(/(,\d+)(\s?€)/, '<span class="cents">$1$2</span>');
+
+  // Zweite Zeile: Gesamtwert inkl. Sachwerte — nur zeigen, wenn Sachwerte vorhanden.
+  const inclWrap = document.getElementById('total-incl');
+  if (inclWrap){
+    if (tang > 0.005){
+      inclWrap.style.display = '';
+      document.getElementById('total-incl-value').textContent = fmtEUR.format(money + tang);
+    } else {
+      inclWrap.style.display = 'none';
+    }
+  }
+
   const last = lastSnapshot();
   const el = document.getElementById('total-delta');
   if (!last){
@@ -37,8 +50,9 @@ function renderTotal(){
     el.innerHTML = '<span class="arrow">·</span><span class="abs">Noch kein Snapshot</span><span class="sep">·</span><span class="pct">—</span>';
     return;
   }
-  const d = t - last.value;
-  const p = last.value === 0 ? 0 : (d / last.value) * 100;
+  const base = snapshotMoneyValue(last);
+  const d = money - base;
+  const p = base === 0 ? 0 : (d / base) * 100;
   const dir = d > 0.005 ? 'up' : d < -0.005 ? 'down' : 'flat';
   const arrow = dir === 'up' ? '▲' : dir === 'down' ? '▼' : '·';
   const sign = d >= 0 ? '+' : '−';

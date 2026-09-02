@@ -51,6 +51,20 @@ function fmtSignedPct(v){
    ============================================================ */
 function catSum(catId){ return state.entries[catId].reduce((a,e)=>a + (Number(e.value)||0), 0); }
 function total(){ return CATS.reduce((a,c)=>a + catSum(c.id), 0); }
+/* Geldwerte = alles außer Sachwerte (Liquide + Kapitalmarkt). */
+function moneyTotal(){ return catSum('LIQUIDE') + catSum('KAPITALMARKT'); }
+/* Sachwerte allein (Gold, Immobilien, …). */
+function tangibleTotal(){ return catSum('SACHWERTE'); }
+/* Geldwert-Anteil eines Snapshots — nutzt das Kategorie-Breakdown,
+   fällt für alte Snapshots ohne Breakdown auf den Gesamtwert zurück. */
+function snapshotMoneyValue(snap){
+  if (!snap) return 0;
+  const b = snap.breakdown;
+  if (b && (b.LIQUIDE !== undefined || b.KAPITALMARKT !== undefined)){
+    return (Number(b.LIQUIDE)||0) + (Number(b.KAPITALMARKT)||0);
+  }
+  return Number(snap.value)||0;
+}
 function lastSnapshot(){
   if (!state.snapshots.length) return null;
   return [...state.snapshots].sort((a,b)=>new Date(b.t)-new Date(a.t))[0];

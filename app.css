@@ -59,6 +59,9 @@
   .total .delta.flat{color:rgba(255,255,255,.72)}
   .total .delta .arrow{font-family:'Inter';font-weight:700}
   .total .delta .sep{color:rgba(255,255,255,.5)}
+  .total .total-incl{margin-top:6px;padding-top:8px;border-top:1px solid rgba(255,255,255,.22)}
+  .total .total-incl .ti-val{display:block;font-family:'Inter',system-ui,sans-serif;font-size:19px;font-weight:600;letter-spacing:-.015em;color:rgba(255,255,255,.94);font-variant-numeric:tabular-nums;line-height:1.1}
+  .total .total-incl .ti-note{display:block;margin-top:2px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:500}
 
   /* ---------- Grid ---------- */
   .grid{display:grid;gap:16px}
